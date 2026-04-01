@@ -1,0 +1,381 @@
+﻿@page "/Games/Blackjack"
+@model BettingSystem.Pages.BlackjackModel
+@{
+}
+<style>
+    .card {
+        width: 71px;
+        height: 95px;
+        background-image: url('/images/cards.png');
+        background-repeat: no-repeat;
+        display: inline-block;
+        margin: 5px;
+    }
+</style>
+
+<!-- prideti timeri-->
+<!-- istrinti bet buttona -->
+<!-- palikti bet amount laukeli -->
+<!-- ivedus bet ir paspaudus start game trigger bet -->
+
+
+<h1 class="display-4 text-center ">Welcome to Blackjack!</h1>
+
+<div class="text-center">
+
+    <button id="startGame"> Start game! </button>
+
+    <button id="hit"> Hit </button>
+
+    <button id="stand"> Stand </button>
+
+    <div id="bet-div">
+        <button id="bet"> Bet </button>
+        <input type="number" id="bet-number" min="1" step="1" />
+        <div id="bet-error" style="color:red;"></div>
+    </div>
+
+
+    <h1> Balance: </h1>
+    <div id="player-balance"> </div>
+
+    <h2> Dealer Score: </h2>
+    <div id="dealer-score"></div>
+    <h2> Dealer Cards: </h2>
+    <div id="dealer-hand"></div>
+
+    <h2> Player score: </h2>
+    <div id="player-score"></div>
+    <h2> Player Cards: </h2>
+    <div id="player-hand"></div>
+
+    <div id="game-status"></div>
+
+    <button id="restart"> Restart</button>
+
+
+</div>
+
+ 
+
+
+
+
+<script>
+    var gameState = false;
+    document.getElementById("restart").style.display = "none";
+    document.getElementById("hit").style.display = "none";
+    document.getElementById("stand").style.display = "none";
+    document.getElementById("startGame").style.display = "none";
+
+    document.getElementById("startGame").addEventListener("click", async () => {
+        gameState = true;
+        try {
+            const url = `/api/Blackjack/startgame/${gameState}`;
+            await fetch(url,{
+                method: "POST",
+            });
+
+            document.getElementById("game-status").innterHTML = "";
+
+
+            document.getElementById("startGame").style.display = "none";
+            document.getElementById("hit").style.display = "inline-block";
+            document.getElementById("stand").style.display = "inline-block";
+
+            // show dealer scores updates on hit
+
+            const responseDealer = await fetch('/api/Blackjack/dealerscore');
+            var dealerScore = await responseDealer.json();
+            const dealerScoreDiv = document.getElementById("dealer-score");
+            dealerScoreDiv.innerHTML = dealerScore;
+
+
+            const responsePlayer = await fetch('/api/Blackjack/playerscore');
+            const playerScore = await responsePlayer.json();
+            const playerScoreDiv = document.getElementById("player-score");
+            playerScoreDiv.innerHTML = playerScore;
+
+
+            const responseDealerCard = await fetch('/api/Blackjack/dealerhand');
+            const dealerData = await responseDealerCard.json();
+            const dealerHandDiv = document.getElementById("dealer-hand");
+            dealerData.forEach(card => showCard(card, "dealer-hand"));
+
+
+            const responsePlayerCard = await fetch('/api/Blackjack/playerhand');
+            const playerData = await responsePlayerCard.json();
+            const playerHandDiv = document.getElementById("player-hand");
+            playerData.forEach(card => showCard(card, "player-hand"));
+
+            loadBalance();
+
+           } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    document.getElementById("hit").addEventListener("click", async () => {
+        try {
+            const url = `/api/Blackjack/hit`;
+            await fetch(url,{
+                method: "POST",
+            });
+
+
+            
+            // show dealer scores updates on hit
+
+            const responseDealer = await fetch('/api/Blackjack/dealerscore');
+            var dealerScore = await responseDealer.json();
+            const dealerScoreDiv = document.getElementById("dealer-score");
+            dealerScoreDiv.innerHTML = dealerScore;
+
+
+            const responsePlayer = await fetch('/api/Blackjack/playerscore');
+            const playerScore = await responsePlayer.json();
+            const playerScoreDiv = document.getElementById("player-score");
+            playerScoreDiv.innerHTML = playerScore;
+
+
+            // show updated cards on hit
+
+            const responseDealerCard = await fetch('/api/Blackjack/dealerhand');
+            const dealerData = await responseDealerCard.json();
+            const dealerHandDiv = document.getElementById("dealer-hand");
+            dealerHandDiv.innerHTML = "";
+
+            dealerData.forEach(card => showCard(card, "dealer-hand"));
+
+
+            const responsePlayerCard = await fetch('/api/Blackjack/playerhand');
+            const playerData = await responsePlayerCard.json();
+            const playerHandDiv = document.getElementById("player-hand");
+            playerHandDiv.innerHTML = "";
+
+            playerData.forEach(card => showCard(card, "player-hand"));
+
+
+            // create post for checking if won
+            loadBalance();
+            checkGameStatus();
+
+
+           } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+
+    document.getElementById("stand").addEventListener("click", async () => {
+        try {
+            const url = `/api/Blackjack/stand`;
+            await fetch(url,{
+                method: "POST",
+            });
+
+
+            const responseDealer = await fetch('/api/Blackjack/dealerscore');
+            var dealerScore = await responseDealer.json();
+            const dealerScoreDiv = document.getElementById("dealer-score");
+            dealerScoreDiv.innerHTML = dealerScore;
+
+
+
+            const responseDealerCard = await fetch('/api/Blackjack/dealerhand');
+            const dealerData = await responseDealerCard.json();
+            const dealerHandDiv = document.getElementById("dealer-hand");
+            dealerHandDiv.innerHTML = "";
+
+            dealerData.forEach(card => showCard(card, "dealer-hand"));
+
+
+
+            loadBalance();
+            checkGameStatus();
+
+
+           } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+        document.getElementById("bet").addEventListener("click", async () => {
+        try {
+            const betNumber = document.getElementById("bet-number").value;
+            const parsedNumber = parseInt(betNumber);
+            const url = `/api/Blackjack/bet`;
+
+            
+
+            if(isNaN(parsedNumber) || parsedNumber <= 0) {
+                alert("Enter a valid positive number!");
+                return;
+            }
+
+            const response = await fetch(url,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(betNumber)
+            });
+
+            const errorDiv = document.getElementById("bet-error");
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                errorDiv.innerText = errorText;
+                return;
+            } else {
+                errorDiv.innerText = "";
+            }
+
+
+            document.getElementById("startGame").style.display = "inline-block";
+            document.getElementById("bet-div").style.display = "none";
+
+            loadBalance();
+
+
+           } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    document.getElementById("restart").addEventListener("click", async () => {
+        gameState = true;
+        try {
+            const url = `/api/Blackjack/restart`;
+            await fetch(url,{
+                method: "POST",
+            });
+
+            const statusDiv = document.getElementById("game-status");
+            statusDiv.innerHTML = "";
+
+            document.getElementById("startGame").style.display = "none";
+            document.getElementById("bet-div").style.display = "inline-block";
+            document.getElementById("hit").style.display = "none";
+            document.getElementById("stand").style.display = "none";
+            document.getElementById("restart").style.display = "none";
+
+
+            const responseDealer = await fetch('/api/Blackjack/dealerscore');
+            var dealerScore = await responseDealer.json();
+            const dealerScoreDiv = document.getElementById("dealer-score");
+            dealerScoreDiv.innerHTML = dealerScore;
+
+
+            const responsePlayer = await fetch('/api/Blackjack/playerscore');
+            const playerScore = await responsePlayer.json();
+            const playerScoreDiv = document.getElementById("player-score");
+            playerScoreDiv.innerHTML = playerScore;
+
+
+            const responseDealerCard = await fetch('/api/Blackjack/dealerhand');
+            const dealerData = await responseDealerCard.json();
+            const dealerHandDiv = document.getElementById("dealer-hand");
+            dealerHandDiv.innerHTML = "";
+
+            dealerData.forEach(card => showCard(card, "dealer-hand"));
+
+
+            const responsePlayerCard = await fetch('/api/Blackjack/playerhand');
+            const playerData = await responsePlayerCard.json();
+            const playerHandDiv = document.getElementById("player-hand");
+            playerHandDiv.innerHTML = "";
+
+            playerData.forEach(card => showCard(card, "player-hand"));
+
+
+
+            loadBalance();
+
+           } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+
+    function showCard(card, containerId) {
+        const suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
+        const ranks = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+        
+        const col = ranks.indexOf(card.rank);
+        const row = suits.indexOf(card.suit);
+
+        const cardWidth = 71;
+        const cardHeight = 95;
+        const margin = 1;
+
+        const x = col * (cardWidth + margin) + 2;
+        const y = row * (cardHeight + margin) + 2;
+
+        const div = document.createElement("div");
+        div.className = "card";
+        div.style.backgroundPosition = `-${x}px -${y}px`;
+        console.log(card.rank);
+        console.log(card.suit);
+
+        document.getElementById(containerId).appendChild(div);
+
+    }
+
+    async function checkGameStatus() {
+        let responseStatus = await fetch('/api/Blackjack/status');
+        let responseData = await responseStatus.text();
+
+
+        const statusDiv = document.getElementById("game-status");
+
+        statusDiv.innerHTML = responseData;
+
+            if (responseData === "Player wins!" ||
+                responseData === "Dealer wins!" ||
+                responseData === "Draw!")
+            {
+                const response = await fetch('/api/blackjack/finishgame', {
+                    method: "POST",
+                });
+                var gameData = await response.text();
+
+
+
+                statusDiv.innerHTML = gameData;
+                gameState = false;
+
+                gameData = "";
+
+                document.getElementById("hit").style.display = "none";
+                document.getElementById("stand").style.display = "none";
+                document.getElementById("restart").style.display = "inline-block";
+
+                loadBalance();
+            }
+            else
+            {
+                statusDiv.innerHTML = "";
+            }
+
+
+    }
+
+
+    async function loadBalance() {
+        const response = await fetch('/api/user/balance');
+
+        if(response.ok) {
+            const balance = await response.json();
+            document.getElementById("player-balance").innerText = balance;
+
+        }
+    }
+    
+    loadBalance();
+
+
+
+
+
+</script>

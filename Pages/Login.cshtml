@@ -1,0 +1,65 @@
+﻿@page
+@model BettingSystem.Pages.LoginModel
+@{
+}
+
+
+<h1>Login in</h1>
+<p>Fill in the form to login!</p>
+
+
+<input type="email" id="email" placeholder="Email">
+<br>
+<input type="password" id="password" placeholder="Password">
+<br>
+
+<button id="loginBtn">Login</button>
+
+<div id="login-result"></div>
+
+
+
+
+<script>
+	document.getElementById("loginBtn").addEventListener("click", async () => {
+		try {
+
+			const login = {
+				email: document.getElementById("email").value,
+				password: document.getElementById("password").value
+			};
+
+			const response = await fetch('/api/auth/login', {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(login)
+			});
+
+
+			const resultDiv = document.getElementById("login-result");
+
+			if(response.ok) {
+				window.location.href = '/';
+				resultDiv.innerHTML = await response.text();
+			} else {
+				const errorText = await response.text();
+				console.error(errorText);
+			}
+
+
+
+		} catch (error) {
+			console.error("Error:", error);
+		}
+
+	});
+
+
+
+
+
+
+
+</script>

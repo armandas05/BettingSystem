@@ -1,0 +1,65 @@
+﻿@page
+@model BettingSystem.Pages.RegisterModel
+@{
+}
+
+
+
+<h1> Sign up</h1>
+<p> Fill in the form to sign up!</p>
+<hr>
+
+<input type="text" id="firstName" placeholder="First Name"><br>
+<input type="text" id="lastName" placeholder="Last Name"><br>
+<input type="email" id="email" placeholder="Email"><br>
+<input type="password" id="password" placeholder="Password"><br>
+
+<button id="registerBtn" >Register </button>
+
+<div id="register-result"></div>
+
+
+
+
+<script>
+	document.getElementById("registerBtn").addEventListener("click", async () => {
+		try {
+
+			const user = {
+				firstName: document.getElementById("firstName").value,
+				lastName: document.getElementById("lastName").value,
+				email: document.getElementById("email").value,
+				password: document.getElementById("password").value
+			};
+
+			const response = await fetch('/api/auth/register', {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(user)
+			});
+
+
+			const resultDiv = document.getElementById("register-result");
+			resultDiv.innerHTML = await response.text();
+			
+
+
+
+
+		} catch (error) {
+			console.error("Error:", error);
+		}
+
+	});
+
+
+
+
+
+
+
+</script>
+
+
