@@ -9,7 +9,7 @@
     body {
         margin: 0;
         padding: 0;
-        background-color: #ffffff;
+        background-color: white;
         font-family: Arial, sans-serif;
         color: white;
     }
@@ -22,9 +22,9 @@
     }
 
     .game-container {
-        width: 1100px;
-        height: 800px;
-        background-color: #676773;
+        width: 900px;
+        height: 700px;
+        background-color: #52525c;
         border-radius: 15px;
 
         display: flex;
@@ -45,8 +45,8 @@
 
 
     .dice-top-background {
-        background-color: #642773;
-        width: 80%;
+        background-color: #52525c;
+        width: 90%;
         border-radius: 10px;
         padding: 30px;
         display: flex;
@@ -58,22 +58,22 @@
     }
 
     .dice-middle-background {
-        background-color: #644773;
-        width: 80%;
+        background-color: #52525c;
+        width: 90%;
         border-radius: 10px;
         padding: 30px;
         display: flex;
-        
+        justify-content: space-between;
 
 
         gap: 10px;
-        margin-top: 55px;
+        
 
     }
 
     .dice-bottom-background {
-        background-color: #644773;
-        width: 80%;
+        background-color: #52525c;
+        width: 90%;
         border-radius: 10px;
         padding: 30px;
         display: flex;
@@ -95,21 +95,28 @@
 
     .text-buttons {
         position: absolute;
-        right: 50px;
-        top: 65%;
+        right: 25px;
+        top: 60%;
         transform: translateY(-50%);
         display: flex;
         gap: 5px;
     }
 
         .text-buttons button {
-            font-size: 14px;
-            padding: 3px 5px;
+            font-size: 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            background-color: #676773;
+            background-color: #52525c;
             color: white;
+        }
+
+        .text-buttons button:first-child {
+            background-color: transparent;
+            font-weight: bold;
+            padding: 5px 10px;
+            
         }
 
 
@@ -129,29 +136,30 @@
     .profit {
         padding: 30px;
         text-align: center;
-        background-color: #52525c;
+        background-color: #3a3a42;
         color: white;
         border-radius: 6px;
+        font-weight: bold;
     }
 
     .profit-group {
-        width: 40%;
+        width: 20%;
     }
 
     .text-area-bet {
-        width: 90%;
+        width: 100%;
         padding: 30px 25px;
-        padding-right: 250px; 
+        padding-right: 380px; 
         text-align: left;
         border-radius: 6px;
         border: none;
-        background-color: #52525c;
+        background-color: #3a3a42;
         color: white;
         outline: none;
     }
 
     .under-over {
-        width: 20%;
+        width: 15%;
         
         
     }
@@ -163,31 +171,34 @@
         text-align: center;
         border-radius: 6px;
         border: none;
+        background-color: #3a3a42;
+        color: white;
     }
 
 
     .text-area-roll {
-        width: 20%;
+        width: 25%;
     }
         .text-area-roll input {
-            background-color: #52525c;
+            background-color: #3a3a42;
             padding: 30px;
             text-align: center;
             color: white;
             border-radius: 6px;
             border: none;
             font-size: 24px;
+            
         }
 
     .text-area-multi {
-        width: 20%;
+        width: 25%;
         
     }
 
         .text-area-multi input {
-            padding: 30px;
+            padding: 30px 35px;
             text-align: center;
-            background-color: #52525c;
+            background-color: #3a3a42;
             color: white;
             border-radius: 6px;
             border: none;
@@ -195,14 +206,14 @@
         }
 
     .text-area-chance {
-        width: 20%;
+        width: 25%;
         
     }
 
         .text-area-chance-label {
             padding: 30px;
             text-align: center;
-            background-color: #52525c;
+            background-color: #3a3a42;
             color: white;
             border-radius: 6px;
             font-size: 24px;
@@ -212,7 +223,8 @@
     .slidecontainer {
         position: relative;
         width: 77%; /* Width of the outside container */
-        margin: 150px;
+        margin: 80px;
+        
     }
 
     .slider {
@@ -235,7 +247,7 @@
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none; /* Override default look */
             appearance: none;
-            width: 12px; /* Set a specific slider handle width */
+            width: 8px; /* Set a specific slider handle width */
             height: 75px; /* Slider handle height */
             background: white; /* Green background */
             cursor: pointer; /* Cursor on hover */
@@ -245,11 +257,13 @@
 
 
     .roll-dice-button {
-        padding: 15px 45px;
-        font-size: 24px;
+        padding: 15px 55px;
+        font-size: 16px;
+        font-weight: bold;
         background-color: limegreen;
         color: white;
         border-radius: 6px;
+        border: none;
     }
 
     .roll-dice-button:hover {
@@ -276,11 +290,11 @@
 
     .shape {
         position: absolute;
-        top: -5px;
+        top: -15px;
        
 
-        width: 36px;
-        height: 36px;
+        width: 50px;
+        height: 50px;
         background-color: white;
         border-radius: 3px;
 
@@ -291,9 +305,10 @@
         animation: tada 0.6s;
 
 
-        color: black;
-        font-size: 12px;
+        color: white;
+        font-size: 16px;
         align-content: center;
+        text-align: center;
 
     }
 
@@ -325,7 +340,7 @@
                 
 
                     <div class="text-buttons">
-                        <button id="clearBtn">Clear</button>
+                        <button id="clearBtn">CLEAR</button>
                         <button id="plusOneBtn">+1</button>
                         <button id="plusTenBtn">+10</button>
                         <button id="halfBtn">1/2</button>
@@ -353,12 +368,13 @@
         <div class="dice-middle-background">
 
             <div class="under-over">
+                <span>Roll type</span>
                 <button id="rollTypeBtn">Under</button>
             </div>
 
 
             <div class="text-area-roll">
-                <label for="roll-num">Roll number:</label>
+                <label for="roll-num">Value:</label>
                 <input type="number" min="0.01" max="99.99" value="47.51" id="roll-num" />
             </div>
                 
@@ -393,7 +409,7 @@
 
         <div class="dice-bottom-background">
 
-            <button class="roll-dice-button" id="roll-dice">Roll Dice</button>
+            <button class="roll-dice-button" id="roll-dice">ROLL DICE</button>
 
         </div>
         
@@ -554,11 +570,14 @@
 
         if(!response.ok) return;
 
+
+        // pridet api kad updatint userio stats po zaidimo
+
+        // pridet api kad updatint game history po zaidimo
+
         let data = await response.json();
 
         showRollMarker(data.value);
-
-        // after rolling update balance;
         loadBalance();
     });
 
@@ -654,6 +673,24 @@
         marker.offsetHeight;
         marker.style.animation = "tada 0.6s";
         marker.innerText = rollValue;
+
+        if(rollValue > rollNumber.value && rollType === "Over") 
+        {
+            marker.style.background = "#00c853";
+        }
+        else if(rollValue < rollNumber.value && rollType === "Over")
+        {
+            marker.style.background = "#ff5252";
+        }
+        else if(rollValue < rollNumber.value && rollType === "Under")
+        {
+            marker.style.background = "#00c853";
+        }
+        else if(rollValue > rollNumber.value && rollType === "Under")
+        {
+            marker.style.background = "#ff5252";
+        }
+
     }
 
 </script>

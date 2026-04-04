@@ -1,7 +1,8 @@
-﻿using BettingSystem.Data.Models;
+﻿using BCrypt.Net;
 using BettingSystem.Data;
+using BettingSystem.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
 
 namespace BettingSystem.Services
 {
@@ -66,6 +67,128 @@ namespace BettingSystem.Services
             return user;
 
         }
+
+        public async Task DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if(user == null)
+            {
+                throw new Exception("No user found!");
+            }
+
+            _context.Users.Remove(user);
+
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<PagedResult<UserDto>> GetUsers(
+            string? searchInput,
+            string sortBy,
+            string sortDir,
+            int page,
+            int pageSize)
+        {
+            var query = _context.Users.AsQueryable();
+
+            //search box
+            if(!string.IsNullOrWhiteSpace(searchInput))
+            {
+                searchInput = searchInput.Trim().ToLower();
+
+                int userId;
+                bool isIdSearch = int.TryParse(searchInput, out userId);
+
+
+                query = query.Where(u =>
+                    u.FirstName.ToLower().Contains(searchInput) ||
+                    u.LastName.ToLower().Contains(searchInput) ||
+                    u.Email.ToLower().Contains(searchInput) ||
+                    (isIdSearch && u.UserID == userId)
+
+                );
+
+            }
+
+            //sort
+            query = sortBy.ToLower() switch
+            {
+                "userid" => sortDir == "asc"
+                ? query.OrderBy(u => u.UserID)
+                : query.OrderByDescending(u => u.UserID),
+
+                "firstname" => sortDir == "asc"
+                ? query.OrderBy(u => u.FirstName)
+                : query.OrderByDescending(u => u.FirstName),
+
+                "lastname" => sortDir == "asc"
+                ? query.OrderBy(u => u.LastName)
+                : query.OrderByDescending(u => u.LastName),
+
+                "email" => sortDir == "asc"
+                ? query.OrderBy(u => u.Email)
+                : query.OrderByDescending(u => u.Email),
+
+                "balance" => sortDir == "asc"
+                ? query.OrderBy(u => u.Balance)
+                : query.OrderByDescending(u => u.Balance),
+
+                "datecreated" => sortDir == "asc"
+                ? query.OrderBy(u => u.DateCreated)
+                : query.OrderByDescending(u => u.DateCreated),
+
+                "isverified" => sortDir == "asc"
+                ? query.OrderBy(u => u.IsVerified)
+                : query.OrderByDescending(u => u.IsVerified),
+
+                "role" => sortDir == "asc"
+                ? query.OrderBy(u => u.Role)
+                : query.OrderByDescending(u => u.Role),
+
+                "gamesplayed" => sortDir == "asc"
+                ? query.OrderBy(u => u.GamesPlayed)
+                : query.OrderByDescending(u => u.GamesPlayed),
+
+                "totaldeposited" => sortDir == "asc"
+                ? query.OrderBy(u => u.TotalDeposited)
+                : query.OrderByDescending(u => u.TotalDeposited),
+
+            };
+
+            var totalCount = await query.CountAsync();
+
+            var users = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => new UserDto
+                {
+                    UserID = u.UserID,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Balance = u.Balance,
+                    DateCreated = u.DateCreated,
+                    IsVerified = u.IsVerified,
+                    Role = u.Role,
+                    GamesPlayed = u.GamesPlayed,
+                    TotalDeposited = u.TotalDeposited,
+
+                })
+                .ToListAsync();
+
+            return new PagedResult<UserDto>
+            {
+                Data = users,
+                TotalCount = totalCount
+            };
+                
+        }
+
+
+
+
+
 
         public async Task<decimal> GetBalance(int userId)
         {

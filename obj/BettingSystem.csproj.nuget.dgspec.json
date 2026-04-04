@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj": {}
+    "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj": {
+    "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj",
         "projectName": "BettingSystem",
-        "projectPath": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj",
-        "packagesPath": "C:\\Users\\Armandas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\obj\\",
+        "projectPath": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj",
+        "packagesPath": "C:\\Users\\Eridas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Armandas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Eridas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
