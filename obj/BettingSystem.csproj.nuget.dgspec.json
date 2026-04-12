@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj": {}
+    "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj": {
+    "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj",
         "projectName": "BettingSystem",
-        "projectPath": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\BettingSystem.csproj",
-        "packagesPath": "C:\\Users\\Eridas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eridas\\Desktop\\projects\\BettingSystem\\obj\\",
+        "projectPath": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\BettingSystem.csproj",
+        "packagesPath": "C:\\Users\\Armandas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Eridas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Armandas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

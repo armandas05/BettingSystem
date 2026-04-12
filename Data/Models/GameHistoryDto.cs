@@ -3,20 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BettingSystem.Data.Models
 {
-    public class GameHistory
+    public class GameHistoryDto
     {
-        [Key]
-        public int GameSessionID {  get; set; }
-        [ForeignKey("User")]
+        public int GameSessionID { get; set; }
         public int UserID { get; set; }
-        public DateTime DateTime {get; set; } = DateTime.Now;
+        public DateTime DateTime { get; set; }
         public decimal BetAmount { get; set; }
         public decimal AmountWon { get; set; }
         public WinType Result { get; set; }
-        [ForeignKey("GameInformation")]
         public int GameID { get; set; }
-
-        public User User { get; set; }
-        public GameInformation GameInformation { get; set; }
     }
 }

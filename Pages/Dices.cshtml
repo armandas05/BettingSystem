@@ -551,7 +551,7 @@
     betInput.addEventListener("input", updateProfit);
 
     rollDiceBtn.addEventListener("click", async () => {
-        const url = `/api/dices/rolldice`;
+        const url = `/api/dice/rolldice`;
 
         const gameInfo = 
         {
@@ -575,9 +575,12 @@
 
         // pridet api kad updatint game history po zaidimo
 
-        let data = await response.json();
 
-        showRollMarker(data.value);
+
+        let data = await response.json();
+        console.log(data.value.rolled);
+
+        showRollMarker(data.value.rolled);
         loadBalance();
     });
 
@@ -591,6 +594,7 @@
             balanceLabel.innerText = balance.toFixed(2);
         }
     }
+
 
     function syncFromSlider() {
         let value = parseFloat(sliderValue.value);

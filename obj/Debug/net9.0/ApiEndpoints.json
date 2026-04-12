@@ -1,6 +1,52 @@
 [
   {
     "ContainingType": "BettingSystem.Controllers.AdminController",
+    "Method": "GetAllGameHistories",
+    "RelativePath": "api/Admin/gamehistories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchInput",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortDir",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BettingSystem.Data.Models.PagedResult\u00601[[BettingSystem.Data.Models.GameHistoryDto, BettingSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BettingSystem.Controllers.AdminController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Admin/users",
     "HttpMethod": "GET",
@@ -286,16 +332,32 @@
     ]
   },
   {
-    "ContainingType": "BettingSystem.Controllers.DicesController",
+    "ContainingType": "BettingSystem.Controllers.DiceController",
     "Method": "RollDice",
-    "RelativePath": "api/Dices/rolldice",
+    "RelativePath": "api/Dice/rolldice",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BettingSystem.Data.Models.GameInfoDto",
+        "Type": "BettingSystem.Data.Models.GameDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BettingSystem.Controllers.GameController",
+    "Method": "PlayGame",
+    "RelativePath": "api/Game",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BettingSystem.Data.Models.GameDto",
         "IsRequired": true
       }
     ],

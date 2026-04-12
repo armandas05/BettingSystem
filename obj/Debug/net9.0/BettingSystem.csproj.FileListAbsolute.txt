@@ -90,7 +90,6 @@ C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebasset
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\swae.build.ex.cache
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\BettingSystem.dll
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\refint\BettingSystem.dll
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\BettingSystem.pdb
@@ -444,3 +443,6 @@ C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\BettingSystem.ge
 C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\ref\BettingSystem.dll
 C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-4u47zpagiu-4u47zpagiu.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\BettingSystem.sourcelink.json
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-vjfqxwtcml-vjfqxwtcml.gz

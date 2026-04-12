@@ -37,6 +37,30 @@ namespace BettingSystem.Controllers
 
         }
 
+        [HttpGet("gamehistories")]
+        public async Task<ActionResult<PagedResult<GameHistoryDto>>> GetAllGameHistories(
+            string? searchInput,
+            string sortBy = "gamesessionid",
+            string sortDir = "asc",
+            int page = 1,
+            int pageSize = 10)
+        {
+
+            var userId = HttpContext.Session.GetInt32("UserID");
+
+            if(userId == null) return Unauthorized();
+
+            var gameHistories = await _userService.GetGameHistories(searchInput, sortBy, sortDir, page, pageSize);
+
+            return Ok(gameHistories);
+
+        }
+
+
+
+
+
+
         [HttpDelete("users/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {

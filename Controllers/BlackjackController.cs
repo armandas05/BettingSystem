@@ -1,4 +1,5 @@
 ﻿using BettingSystem.Data.Entities;
+using BettingSystem.Data.Models;
 using BettingSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,13 +14,19 @@ namespace BettingSystem.Controllers
         private readonly DeckService _deckService;
         private readonly BlackjackService _blackjackService;
         private readonly UserService _userService;
+        private readonly GameService _gameService;
 
 
-        public BlackjackController(DeckService deckService, BlackjackService blackjackService, UserService userService)
+        public BlackjackController(
+            DeckService deckService, 
+            BlackjackService blackjackService, 
+            UserService userService,
+            GameService gameService)
         {
             _deckService = deckService;
             _blackjackService = blackjackService;
             _userService = userService;
+            _gameService = gameService;
         }
 
 
@@ -131,16 +138,29 @@ namespace BettingSystem.Controllers
             var result = _blackjackService.CheckGameStatus();
             var bet = _blackjackService.GetBet();
 
+            var dto = new GameResult();
+
+            _blackjackService.RestartGame();
+
             if(result == "Player wins!")
             {
-                Console.WriteLine($"Current bet: {bet}");
-                await _userService.AddBalance((int)userId, (bet * 2));
+                dto.Result = WinType.Win;
+                dto.WonAmount = bet * 2;
+                var results = await _gameService.FinishBlackjack(dto, (int)userId);
             } 
-            else if (result == "Draw!")
+            else if (result == "Dealer wins!")
             {
-                await _userService.AddBalance((int)userId, bet);
-                Console.WriteLine($"Current bet: {bet}");
+                dto.Result = WinType.Lose;
+                dto.WonAmount = 0;
+                var results = await _gameService.FinishBlackjack(dto, (int)userId);
             }
+            else
+            {
+                dto.Result = WinType.Draw;
+                dto.WonAmount = 0;
+                var results = await _gameService.FinishBlackjack(dto, (int)userId);
+            }
+
 
             return Ok(result);
 

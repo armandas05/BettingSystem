@@ -28,15 +28,21 @@ function afterLoadPage(url) {
 
     }
 
+    if (url.includes("GameHistory")) {
+        loadGameHistories();
+        return;
+    }
+
 }
 
-let currentPage = 1;
+let currentUserPage = 1;
+let currentGameHistoryPage = 1;
 let pageSize = 10;
 
 async function loadUsers(page = 1) {
-    currentPage = page;
+    currentUserPage = page;
 
-    const response = await fetch(`/api/admin/users?page=${page}&pageSize=${pageSize}&sortBy=${currentSort.sortBy}&sortDir=${currentSort.sortDir}`);
+    const response = await fetch(`/api/admin/users?page=${page}&pageSize=${pageSize}&sortBy=${currentUserSort.sortBy}&sortDir=${currentUserSort.sortDir}`);
 
     if (!response.ok) {
         console.error("Failed to load users!");
@@ -46,24 +52,57 @@ async function loadUsers(page = 1) {
     const result = await response.json();
 
     renderUsers(result.data);
-    renderPagination(result.totalCount);
-    renderSearch();
+    renderPagination(result.totalCount, 1);
+    renderSearch(1);
     renderButtons();
 }
 
-let currentSort = {
+async function loadGameHistories(page = 1) {
+    currentGameHistoryPage = page;
+
+    const response = await fetch(`/api/admin/gamehistories?page=${page}&pageSize=${pageSize}&sortBy=${currentGameHistorySort.sortBy}&sortDir=${currentGameHistorySort.sortDir}`);
+
+    if (!response.ok) {
+        console.error("Failed to load game histories!");
+        return;
+    }
+
+    const result = await response.json();
+
+    renderGameHistories(result.data);
+    renderPagination(result.totalCount, 2);
+    renderSearch(2);
+
+}
+
+let currentUserSort = {
     sortBy: "userid",
     sortDir: "asc"
 };
 
-function renderSearch() {
-    let html = "";
+let currentGameHistorySort = {
+    sortBy: "gamesessionid",
+    sortDir: "asc"
+};
 
-    html = `
-    <label for="searchInput">Search user:</label>
-        <input type="text" id="searchInput" />
-        <button onclick="searchUser()" id="searchBtn">Search</button>
-    `;
+function renderSearch(pageType) {
+    let html = "";
+    if (pageType === 1) {
+        html = `
+        <label for="searchInput">Search user:</label>
+            <input type="text" id="searchInput" />
+            <button onclick="searchUser()" id="searchBtn">Search</button>
+        `;
+    }
+    else if (pageType === 2)
+    {
+        html = `
+        <label for="searchInput">Search user:</label>
+            <input type="text" id="searchInput" />
+            <button onclick="searchGameHistoryUser()" id="searchBtn">Search</button>
+        `;
+    }
+
     document.getElementById("searchBox").innerHTML = html;
 }
 
@@ -81,37 +120,99 @@ async function searchUser() {
     const result = await response.json();
 
     renderUsers(result.data);
-    renderPagination(result.totalCount);
-    renderSearch();
+    renderPagination(result.totalCount, 1);
+    renderSearch(1);
+}
+
+async function searchGameHistoryUser() {
+    const input = document.getElementById("searchInput").value;
+
+
+    const response = await fetch(`/api/admin/gamehistories?searchInput=${input}&page=1&pageSize=10`);
+
+    if (!response.ok) {
+        console.error("Failed to load users!");
+        return;
+    }
+
+    const result = await response.json();
+
+    renderGameHistories(result.data);
+    renderPagination(result.totalCount, 2);
+    renderSearch(2);
 }
 
 
 
-function renderPagination(totalCount) {
+function renderPagination(totalCount, pageType) {
     const totalPages = Math.ceil(totalCount / pageSize);
+
+    let currentPage = pageType === 1 ? currentUserPage : currentGameHistoryPage;
 
     let html = "";
 
-    for (let i = 1; i <= totalPages; i++) {
-        html += `<button onclick="loadUsers(${i})">${i}</button>`;
-    }
+    html += `<button onclick="changePage(${currentPage - 1}, ${pageType})"
+                ${currentPage === 1 ? "disabled" : ""}>
+                Prev
+             </button>`;
+
+    html += `<span style="margin:5px;">Page ${currentPage} / ${totalPages}</span>`;
+
+    html += `<button onclick="changePage(${currentPage + 1}, ${pageType})" 
+                ${currentPage === totalPages ? "disabled" : ""}>
+                Next
+            </button>`;
+
+    html += `<button onclick="changePage(${totalPages}, ${pageType})">
+                Last
+            </button>`;
+
 
     document.getElementById("pagination").innerHTML = html;
 }
 
-function sortTable(field) {
+function changePage(page, pageType) {
+    if (pageType === 1) {
+        loadUsers(page);
+    }
+    else if (pageType === 2)
+    {
+        loadGameHistories(page);
+    }
+}
+
+function sortTable(field, pageType) {
     let newDir = "asc";
 
-    if (currentSort.sortBy === field && currentSort.sortDir === "asc") {
-        newDir = "desc";
+    if (pageType === 1) {
+
+        if (currentUserSort.sortBy === field && currentUserSort.sortDir === "asc") {
+            newDir = "desc";
+        }
+
+        currentUserSort = {
+            sortBy: field,
+            sortDir: newDir
+        };
+
+        loadUsers(1);
+        return;
+    }
+    else if (pageType === 2)
+    {
+        if (currentGameHistorySort.sortBy === field && currentGameHistorySort.sortDir === "asc") {
+            newDir = "desc";
+        }
+
+        currentGameHistorySort = {
+            sortBy: field,
+            sortDir: newDir
+        };
+
+        loadGameHistories(1);
+        return;
     }
 
-    currentSort = {
-        sortBy: field,
-        sortDir: newDir
-    };
-
-    loadUsers(1);
 }
 
 function getSelectedUserId() {
@@ -133,7 +234,6 @@ function renderButtons() {
 
     html = `
         <button onclick="viewUser()">View</button>
-        <button onclick="blockUser()">Block</button>
         <button onclick="deleteUser()">Delete</button>
     `;
     document.getElementById("userButtons").innerHTML = html;
@@ -147,12 +247,6 @@ function viewUser() {
         return;
     }
     const userId = selected[0];
-    console.log(userId);
-
-}
-
-function blockUser() {
-    //prideti bool Blocked prie User table kad galetume prideti blockUser funckija;;;
 }
 
 async function deleteUser() {
@@ -177,7 +271,7 @@ async function deleteUser() {
         }
         console.log("User deleted");
 
-        loadUsers(currentPage);
+        loadUsers(currentUserPage);
 
     } else {
         // canceled pop up
@@ -194,15 +288,15 @@ function renderUsers(users) {
         <thead>
             <tr>
                 <th></th>
-                <th onclick="sortTable('userid')">User ID</th>
-                <th onclick="sortTable('firstname')">First name</th>
-                <th onclick="sortTable('lastname')">Last name</th>
-                <th onclick="sortTable('email')">Email</th>
-                <th onclick="sortTable('balance')">Balance</th>
+                <th onclick="sortTable('userid', 1)">User ID</th>
+                <th onclick="sortTable('firstname', 1)">First name</th>
+                <th onclick="sortTable('lastname', 1)">Last name</th>
+                <th onclick="sortTable('email', 1)">Email</th>
+                <th onclick="sortTable('balance', 1)">Balance</th>
                 <th>Date Created</th>
                 <th>Verified</th>
                 <th>Role</th>
-                <th>Games</th>
+                <th>Games Played</th>
                 <th>Deposited</th>
             </tr>
         </thead>
@@ -233,6 +327,52 @@ function renderUsers(users) {
     `;
 
     document.getElementById("usersTable").innerHTML = html;
+}
+
+function renderGameHistories(histories) {
+    let html = `
+    <table>
+        <thead>
+            <tr>
+                <th onclick="sortTable('gamesessionid', 2)">Game Session ID</th>
+                <th onclick="sortTable('userid', 2)">User ID</th>
+                <th onclick="sortTable('datetime', 2)">Date/Time</th>
+                <th onclick="sortTable('betamount', 2)">Bet Amount</th>
+                <th onclick="sortTable('amountwon', 2)">Amount Won</th>
+                <th onclick="sortTable('result', 2)">Result</th>
+                <th onclick="sortTable('gameid', 2)">Game</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+    histories.forEach(h => {
+        let game = h.gameID === 1 ? "Blackjack" : "Dices";
+        let result = h.result === 0 ? "Win"
+            : h.result === 1 ? "Lose"
+                : h.result === 2 ? "Draw"
+                    : "Unknown";
+
+
+        html += `
+            <tr>
+                <td>${h.gameSessionID}</td>
+                <td>${h.userID}</td>
+                <td>${h.dateTime}</td>
+                <td>${h.betAmount}</td>
+                <td>${h.amountWon}</td>
+                <td>${result}</td>
+                <td>${game}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+        </tbody>
+    </table>
+    `;
+
+    document.getElementById("gamesTable").innerHTML = html;
 }
 
                 

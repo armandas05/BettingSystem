@@ -19,7 +19,6 @@ namespace BettingSystem.Services
         }
         public void StartGame()
         {
-            //gameState = true;
             for (int i = 0; i < 1; i++)
             {
                 _dealerCards.Add(_deckService.DrawCard());
@@ -55,6 +54,7 @@ namespace BettingSystem.Services
             if (GetDealerScore() > 21) return;
             if (GetPlayerScore() > 21) return;
             if (GetPlayerScore() == 21) return;
+            if (GetDealerScore() == 21) return;
             _dealerCards.Add(_deckService.DrawCard());
         }
 
@@ -132,9 +132,6 @@ namespace BettingSystem.Services
 
             return cardSum;
         }
-
-
-
 
 
 

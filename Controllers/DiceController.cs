@@ -6,44 +6,27 @@ namespace BettingSystem.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DicesController : ControllerBase
+    public class DiceController : ControllerBase
     {
 
-        private readonly UserService _userService;
-        private readonly DiceService _diceService;
+        private readonly GameService _gameService;
 
-        public DicesController(UserService userService, DiceService diceService) {
-            _userService = userService;
-            _diceService = diceService;
+        public DiceController(GameService gameService) {
+            _gameService = gameService;
         }
 
 
         [HttpPost("rolldice")]
-        public async Task<ActionResult> RollDice([FromBody] GameInfoDto dto)
+        public async Task<ActionResult> RollDice([FromBody] GameDto dto)
         {
 
             var userId = HttpContext.Session.GetInt32("UserID");
-
             if (userId == null) return Unauthorized();
 
-            if(dto.betAmount <= 0 || dto.betAmount >= 99999)
-            {
-                return BadRequest("Invalid bet amount!");
-            }
 
-            if (string.IsNullOrEmpty(dto.rollType))
-            {
-                return BadRequest("Invalid roll type");
-            }
+            var result = await _gameService.PlayDice(dto, (int)userId);
+            
 
-            var balance = await _userService.GetBalance((int)userId);
-
-            if (balance < dto.betAmount)
-            {
-                return BadRequest("Not enough balance!");
-            }
-
-            var result = await _diceService.RollDice((int)userId, dto.betAmount, dto.rollNumber, dto.rollType);
 
             return Ok(result);
         }

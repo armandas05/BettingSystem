@@ -186,6 +186,86 @@ namespace BettingSystem.Services
         }
 
 
+        public async Task<PagedResult<GameHistoryDto>> GetGameHistories(
+            string? searchInput,
+            string sortBy,
+            string sortDir,
+            int page,
+            int pageSize)
+        {
+            var query = _context.GameHistories.AsQueryable();
+
+            //search box
+            if (!string.IsNullOrWhiteSpace(searchInput))
+            {
+                searchInput = searchInput.Trim().ToLower();
+
+                int userId;
+                bool isIdSearch = int.TryParse(searchInput, out userId);
+
+
+                query = query.Where(u => (isIdSearch && u.UserID == userId));
+
+            }
+
+            //sort
+            query = sortBy.ToLower() switch
+            {
+                "gamesessionid" => sortDir == "asc"
+                ? query.OrderBy(u => u.GameSessionID)
+                : query.OrderByDescending(u => u.GameSessionID),
+
+                "userid" => sortDir == "asc"
+                ? query.OrderBy(u => u.UserID)
+                : query.OrderByDescending(u => u.UserID),
+
+                "datetime" => sortDir == "asc"
+                ? query.OrderBy(u => u.DateTime)
+                : query.OrderByDescending(u => u.DateTime),
+
+                "betamount" => sortDir == "asc"
+                ? query.OrderBy(u => u.BetAmount)
+                : query.OrderByDescending(u => u.BetAmount),
+
+                "amountwon" => sortDir == "asc"
+                ? query.OrderBy(u => u.AmountWon)
+                : query.OrderByDescending(u => u.AmountWon),
+
+                "result" => sortDir == "asc"
+                ? query.OrderBy(u => u.Result)
+                : query.OrderByDescending(u => u.Result),
+
+                "gameid" => sortDir == "asc"
+                ? query.OrderBy(u => u.GameID)
+                : query.OrderByDescending(u => u.GameID)
+
+            };
+
+            var totalCount = await query.CountAsync();
+
+            var histories = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => new GameHistoryDto
+                {
+                    GameSessionID = u.GameSessionID,
+                    UserID = u.UserID,
+                    DateTime = u.DateTime,
+                    BetAmount = u.BetAmount,
+                    AmountWon = u.AmountWon,
+                    Result = u.Result,
+                    GameID = u.GameID,
+                })
+                .ToListAsync();
+
+            return new PagedResult<GameHistoryDto>
+            {
+                Data = histories,
+                TotalCount = totalCount
+            };
+
+        }
+
 
 
 
