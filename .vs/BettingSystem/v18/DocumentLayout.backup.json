@@ -3,44 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\wwwroot\\js\\admin.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:wwwroot\\js\\admin.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\pages\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:pages\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\pages\\admin\\gamehistorypartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:pages\\admin\\gamehistorypartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\data\\models\\gamehistorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:data\\models\\gamehistorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\controllers\\blackjackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:controllers\\blackjackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\data\\models\\gamehistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:data\\models\\gamehistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|c:\\users\\armandas\\desktop\\projects\\bettingsystem\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8012024-5162-40FC-ACA5-B5061A465E90}|BettingSystem.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -49,138 +21,49 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 779,
+          "DockedWidth": 228,
           "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Dashboard.cshtml",
               "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Dashboard.cshtml",
               "RelativeDocumentMoniker": "Pages\\Dashboard.cshtml",
               "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Dashboard.cshtml",
               "RelativeToolTip": "Pages\\Dashboard.cshtml",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAAAHsAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-03T16:32:28.228Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Shared\\_Layout.cshtml*",
+              "RelativeToolTip": "Pages\\Shared\\_Layout.cshtml*",
+              "ViewState": "AgIAACEAAAAAAAAAAAAUwDYAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-12T14:42:05.682Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "Services\\UserService.cs",
               "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Services\\UserService.cs",
               "RelativeToolTip": "Services\\UserService.cs",
-              "ViewState": "AgIAANcAAAAAAAAAAAAwwCsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAP8AAAAAAAAAAAAmwBMAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T14:02:58.876Z",
+              "WhenOpened": "2026-04-12T14:45:45.193Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "GameHistory.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\Models\\GameHistory.cs",
-              "RelativeDocumentMoniker": "Data\\Models\\GameHistory.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\Models\\GameHistory.cs",
-              "RelativeToolTip": "Data\\Models\\GameHistory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T16:42:04.49Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwDYAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T15:58:09.328Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GameHistoryPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Admin\\GameHistoryPartial.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Admin\\GameHistoryPartial.cshtml",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Pages\\Admin\\GameHistoryPartial.cshtml",
-              "RelativeToolTip": "Pages\\Admin\\GameHistoryPartial.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-09T16:27:07.14Z"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 487,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "admin.js",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\wwwroot\\js\\admin.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\admin.js",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\wwwroot\\js\\admin.js",
-              "RelativeToolTip": "wwwroot\\js\\admin.js",
-              "ViewState": "AgIAACYAAAAAAAAAAAAQwPYAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-04-09T15:50:33.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GameController.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\GameController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\GameController.cs",
-              "RelativeToolTip": "Controllers\\GameController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T17:41:41.47Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BlackjackController.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\BlackjackController.cs",
-              "RelativeDocumentMoniker": "Controllers\\BlackjackController.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Controllers\\BlackjackController.cs",
-              "RelativeToolTip": "Controllers\\BlackjackController.cs",
-              "ViewState": "AgIAAHYAAAAAAAAAAAAqwI8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T16:21:04.649Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GameHistoryDto.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\Models\\GameHistoryDto.cs",
-              "RelativeDocumentMoniker": "Data\\Models\\GameHistoryDto.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\Models\\GameHistoryDto.cs",
-              "RelativeToolTip": "Data\\Models\\GameHistoryDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T16:03:34.278Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\Armandas\\Desktop\\PROJECTS\\BettingSystem\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T14:51:59.294Z"
             }
           ]
         }

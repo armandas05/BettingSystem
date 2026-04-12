@@ -54,7 +54,6 @@ async function loadUsers(page = 1) {
     renderUsers(result.data);
     renderPagination(result.totalCount, 1);
     renderSearch(1);
-    renderButtons();
 }
 
 async function loadGameHistories(page = 1) {
@@ -230,12 +229,17 @@ function getSelectedUserId() {
 }
 
 function renderButtons() {
-    let html = "";
+    const selected = getSelectedUserId();
+    if (selected.length === 0) {
+        document.getElementById("userButtons").innerHTML = "";
+        return;
+    }
 
-    html = `
+    let html = `
         <button onclick="viewUser()">View</button>
         <button onclick="deleteUser()">Delete</button>
     `;
+
     document.getElementById("userButtons").innerHTML = html;
 }
 
@@ -306,7 +310,7 @@ function renderUsers(users) {
     users.forEach(u => {
         html += `
             <tr>
-                <td><input type="checkbox" class="row-checkbox" data-userid="${u.userID}"></th>
+                <td><input type="checkbox" class="row-checkbox" onclick="renderButtons()" data-userid="${u.userID}"></th>
                 <td>${u.userID}</td>
                 <td>${u.firstName}</td>
                 <td>${u.lastName}</td>

@@ -35,10 +35,6 @@
         <div id="bet-error" style="color:red;"></div>
     </div>
 
-
-    <h1> Balance: </h1>
-    <div id="player-balance"> </div>
-
     <h2> Dealer Score: </h2>
     <div id="dealer-score"></div>
     <h2> Dealer Cards: </h2>
@@ -358,24 +354,14 @@
                 statusDiv.innerHTML = "";
             }
 
+            loadBalance();
 
     }
 
-
-    async function loadBalance() {
-        const response = await fetch('/api/user/balance');
-
-        if(response.ok) {
-            const balance = await response.json();
-            document.getElementById("player-balance").innerText = balance;
-
-        }
-    }
-    
-    loadBalance();
 
 
 
 
 
 </script>
+<script src="~/js/navbar.js"></script>

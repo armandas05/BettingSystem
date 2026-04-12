@@ -319,10 +319,6 @@
 
 <div class="title">🎲 Dice</div>
 
-<div class="title">Balance:
-    <label id="balance-id">0</label>
-</div>
-
 <div class="page-center">
 
     <div class="game-container">
@@ -416,8 +412,8 @@
 
     </div>
 </div>
-        <p>Paspaudus roll dice, disablint mygtuka ir padaryt animationa ant sliderio koks roll number iskrito, update balance ir tada vel enable roll dice mygtuka.</p>
-
+     
+<script src="~/js/navbar.js"></script>
 <script>
     const betInput = document.getElementById("bet-amount");
     const profitLabel = document.getElementById("profit-num");
@@ -448,7 +444,6 @@
         syncFromSlider();
         updateSliderBackground();
         updateProfit();
-        loadBalance();
     }
 
 
@@ -553,6 +548,11 @@
     rollDiceBtn.addEventListener("click", async () => {
         const url = `/api/dice/rolldice`;
 
+        if(betInput.value <= 0) {
+            console.error("Bet amount invalid!");
+            return;
+        }
+ 
         const gameInfo = 
         {
             betAmount: betInput.value,
@@ -571,29 +571,12 @@
         if(!response.ok) return;
 
 
-        // pridet api kad updatint userio stats po zaidimo
-
-        // pridet api kad updatint game history po zaidimo
-
-
-
         let data = await response.json();
-        console.log(data.value.rolled);
 
         showRollMarker(data.value.rolled);
         loadBalance();
+
     });
-
-    async function loadBalance() {
-        const response = await fetch('/api/user/balance');
-
-        if(response.ok) {
-            const balanceLabel = document.getElementById("balance-id");
-            const balance = await response.json();
-
-            balanceLabel.innerText = balance.toFixed(2);
-        }
-    }
 
 
     function syncFromSlider() {
