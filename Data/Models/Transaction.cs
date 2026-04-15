@@ -7,18 +7,20 @@ namespace BettingSystem.Data.Models
     {
         [Key]
         public int TransactionID { get; set; }
+
         [ForeignKey("User")]
         public int UserID { get; set; }
+
         [Required]
         public decimal DepositAmount { get; set; }
+
         [Required]
         public DepositMethod Method { get; set; }
 
-        public DateTime DateDeposited { get; set; }
+        public DateTime DateDeposited { get; set; } = DateTime.Now;
 
-
+        public User User { get; set; }
     }
-
 
     public enum DepositMethod
     {
@@ -29,6 +31,4 @@ namespace BettingSystem.Data.Models
         GooglePay,
         ApplePay
     }
-
-
 }

@@ -5,7 +5,6 @@ wwwroot\images\cards.png
 wwwroot\images\dices.jpg
 wwwroot\images\highlow.jpg
 wwwroot\images\roulette.jpg
-wwwroot\js\admin.js
 wwwroot\js\navbar.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
@@ -68,8 +67,10 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\js\admin.js
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\css\site.css
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\favicon.ico
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\js\navbar.js
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\js\site.js
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -131,4 +132,3 @@ C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\lib\jquery\dist\jquery.
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\lib\jquery\LICENSE.txt
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\js\admin.js
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\wwwroot\js\navbar.js

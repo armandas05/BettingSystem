@@ -36,7 +36,7 @@ namespace BettingSystem.Services
                 Balance = 0,
                 DateCreated = DateTime.Now,
                 IsVerified = true,
-                Role = "User",
+                Role = User.UserRoles.User,
                 GamesPlayed = 0,
                 TotalDeposited = 0,
                 GameHistories = new List<GameHistory>()
@@ -265,9 +265,6 @@ namespace BettingSystem.Services
             };
 
         }
-
-
-
 
 
         public async Task<decimal> GetBalance(int userId)

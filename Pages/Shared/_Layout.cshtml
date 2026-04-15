@@ -10,101 +10,118 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BettingSystem</title>
-    <script type="importmap"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BettingSystem.styles.css" asp-append-version="true" />
 </head>
+
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">BettingSystem</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
 
-                        @if (!isLoggedIn)
-                        {
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
 
-                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <a class="navbar-brand" asp-page="/Index">BettingSystem</a>
 
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Login">Sign In</a>
-                                    </li>
-                                </ul>
+        <div class="collapse navbar-collapse">
 
-                            </div>
+            <ul class="navbar-nav">
 
-                            
-                        } 
-                        @if (isLoggedIn)
-                        {
-                            
-                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @if (isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Games">Games</a>
+                    </li>
+                } 
 
-                                
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Games">Games</a>
-                                    </li>
+            </ul>
 
-                                </ul>
+            <ul class="navbar-nav ms-auto align-items-center">
 
-                                
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Dashboard">Admin Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <span class="nav-link" id="userBalance"></span>
-                                    </li>
+                @if (!isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Register">Register</a>
+                    </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-page="/Logout">Logout</a>
-                                    </li>
-                                </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Login">Sign in</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item me-3">
+                        <a class="nav-link" asp-page="/Dashboard">Admin</a>
+                    </li>
 
-                            </div>
+                    <li class="nav-item d-flex align-items-center me-3">
+                        @*pakeisti balance spalva pridet klase?*@
+                        <span id="userBalance" class="text-warning fw-bold me-2">
+                            Balance: ...
+                        </span>
 
+                        <button class="btn btn-success btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#depositModal">
+                            +
+                        </button>
+                    </li>
 
-                        
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Logout">Logout</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - BettingSystem - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    @*deposit modal*@
+    <div class="modal fade" id="depositModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Deposit Funds</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="number"
+                           id="depositAmount"
+                           class="form-control mb-3"
+                           placeholder="Enter amount" />
+
+                    <select id="depositMethod" class="form-control">
+                        <option value="0">BTC</option>
+                        <option value="1">ETH</option>
+                        <option value="2">Bank</option>
+                        <option value="3">Card</option>
+                        <option value="4">Google Pay</option>
+                        <option value="5">Apple Pay</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" onclick="deposit()">Deposit</button>
+                </div>
+
+            </div>
         </div>
-    </footer> *@
+    </div>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
     <script src="~/js/navbar.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

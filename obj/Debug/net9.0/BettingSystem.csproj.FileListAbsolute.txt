@@ -445,5 +445,5 @@ C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\staticwebassets.
 C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-4u47zpagiu-4u47zpagiu.gz
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\BettingSystem.sourcelink.json
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-1q87ho9pr4-1q87ho9pr4.gz
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\7i57jrf71k-{0}-qutlyip5bb-qutlyip5bb.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\7i57jrf71k-{0}-pjjs02dm76-pjjs02dm76.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-hh871yxfs9-hh871yxfs9.gz

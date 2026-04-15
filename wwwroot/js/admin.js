@@ -16,7 +16,6 @@
 
 }
 
-
 function afterLoadPage(url) {
 
     if (url.includes("Users")) {
@@ -25,7 +24,8 @@ function afterLoadPage(url) {
     }
 
     if (url.includes("Payments")) {
-
+        loadPayments();
+        return;
     }
 
     if (url.includes("GameHistory")) {
@@ -37,6 +37,7 @@ function afterLoadPage(url) {
 
 let currentUserPage = 1;
 let currentGameHistoryPage = 1;
+let currentPaymentsPage = 1;
 let pageSize = 10;
 
 async function loadUsers(page = 1) {
@@ -56,6 +57,7 @@ async function loadUsers(page = 1) {
     renderSearch(1);
 }
 
+
 async function loadGameHistories(page = 1) {
     currentGameHistoryPage = page;
 
@@ -74,6 +76,26 @@ async function loadGameHistories(page = 1) {
 
 }
 
+async function loadPayments(page = 1) {
+    currentPaymentsPage = page;
+
+    const response = await fetch(`/api/admin/transactions?page=${page}&pageSize=${pageSize}&sortBy=${currentPaymentSort.sortBy}&sortDir=${currentPaymentSort.sortDir}`);
+
+    if (!response.ok) {
+        console.error("Failed to load payments!");
+        return;
+    }
+
+    const result = await response.json();
+
+    renderPayments(result.data);
+    console.log(result.data);
+    renderPagination(result.totalCount, 3);
+    renderSearch(3);
+
+
+}
+
 let currentUserSort = {
     sortBy: "userid",
     sortDir: "asc"
@@ -84,6 +106,11 @@ let currentGameHistorySort = {
     sortDir: "asc"
 };
 
+let currentPaymentSort = {
+    sortBy: "transactionid",
+    sortDir: "asc"
+}
+
 function renderSearch(pageType) {
     let html = "";
     if (pageType === 1) {
@@ -93,12 +120,18 @@ function renderSearch(pageType) {
             <button onclick="searchUser()" id="searchBtn">Search</button>
         `;
     }
-    else if (pageType === 2)
-    {
+    else if (pageType === 2) {
         html = `
         <label for="searchInput">Search user:</label>
             <input type="text" id="searchInput" />
             <button onclick="searchGameHistoryUser()" id="searchBtn">Search</button>
+        `;
+    }
+    else if (pageType === 3) {
+        html = `
+        <label for="searchInput">Search user:</label>
+            <input type="text" id="searchInput" />
+            <button onclick="searchTransactionUser()" id="searchBtn">Search</button>
         `;
     }
 
@@ -141,12 +174,37 @@ async function searchGameHistoryUser() {
     renderSearch(2);
 }
 
+async function searchTransactionUser() {
+    const input = document.getElementById("searchInput").value;
+
+
+    const response = await fetch(`/api/admin/transactions?searchInput=${input}&page=1&pageSize=10`);
+
+    if (!response.ok) {
+        console.error("Failed to load transactions!");
+        return;
+    }
+
+    const result = await response.json();
+
+    renderPayments(result.data);
+    renderPagination(result.totalCount, 3);
+    renderSearch(3);
+}
+
 
 
 function renderPagination(totalCount, pageType) {
     const totalPages = Math.ceil(totalCount / pageSize);
 
-    let currentPage = pageType === 1 ? currentUserPage : currentGameHistoryPage;
+    switch (pageType) {
+        case 1: currentPage = currentUserPage;
+            break;
+        case 2: currentPage = currentGameHistoryPage;
+            break;
+        case 3: currentPage = currentPaymentsPage;
+            break;
+    }
 
     let html = "";
 
@@ -178,12 +236,17 @@ function changePage(page, pageType) {
     {
         loadGameHistories(page);
     }
+    else if (pageType === 3)
+    {
+        loadPayments(page);
+    }
 }
 
 function sortTable(field, pageType) {
     let newDir = "asc";
 
-    if (pageType === 1) {
+    if (pageType === 1)
+    {
 
         if (currentUserSort.sortBy === field && currentUserSort.sortDir === "asc") {
             newDir = "desc";
@@ -211,7 +274,20 @@ function sortTable(field, pageType) {
         loadGameHistories(1);
         return;
     }
+    else if (pageType === 3)
+    {
+        if (currentPaymentSort.sortBy === field && currentPaymentSort.sortDir === "asc") {
+            newDir = "desc";
+        }
 
+        currentPaymentSort = {
+            sortBy: field,
+            sortDir: newDir
+        };
+
+        loadPayments(1);
+        return;
+    }
 }
 
 function getSelectedUserId() {
@@ -278,7 +354,6 @@ async function deleteUser() {
         loadUsers(currentUserPage);
 
     } else {
-        // canceled pop up
         console.log("cancelled!");
         return;
     }
@@ -308,6 +383,8 @@ function renderUsers(users) {
     `;
 
     users.forEach(u => {
+        let role = u.role === 0 ? "User" : "Admin";
+
         html += `
             <tr>
                 <td><input type="checkbox" class="row-checkbox" onclick="renderButtons()" data-userid="${u.userID}"></th>
@@ -318,7 +395,7 @@ function renderUsers(users) {
                 <td>${u.balance}</td>
                 <td>${u.dateCreated}</td>
                 <td>${u.isVerified}</td>
-                <td>${u.role}</td>
+                <td>${role}</td>
                 <td>${u.gamesPlayed}</td>
                 <td>${u.totalDeposited}</td>
             </tr>
@@ -377,6 +454,58 @@ function renderGameHistories(histories) {
     `;
 
     document.getElementById("gamesTable").innerHTML = html;
+}
+
+
+function renderPayments(transactions) {
+    let html = `
+    <table>
+        <thead>
+            <tr>
+                <th onclick="sortTable('transactionid', 3)">Transaction ID</th>
+                <th onclick="sortTable('userid', 3)">User ID</th>
+                <th onclick="sortTable('depositamount', 3)">Deposit Amount</th>
+                <th onclick="sortTable('method', 3)">Deposit Method</th>
+                <th onclick="sortTable('datedeposited', 3)">Date/Time</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+    transactions.forEach(t => {
+        let method;
+        switch (t.method) {
+            case 0: method = "BTC";
+                break;
+            case 1: method = "ETH";
+                break;
+            case 2: method = "Bank";
+                break;
+            case 3: method = "Card";
+                break;
+            case 4: method = "Google Pay";
+                break;
+            case 5: method = "Apple Pay";
+                break;
+        }
+
+        html += `
+            <tr>
+                <td>${t.transactionID}</td>
+                <td>${t.userID}</td>
+                <td>${t.depositAmount}</td>
+                <td>${method}</td>
+                <td>${t.dateDeposited}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+        </tbody>
+    </table>
+    `;
+
+    document.getElementById("paymentsTable").innerHTML = html;
 }
 
                 

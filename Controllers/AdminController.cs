@@ -11,10 +11,12 @@ namespace BettingSystem.Controllers
     public class AdminController : Controller
     {
         private readonly UserService _userService;
+        private readonly TransactionService _transactionService;
 
-        public AdminController(UserService userService)
+        public AdminController(UserService userService, TransactionService transactionService)
         {
             _userService = userService;
+            _transactionService = transactionService;
         }
 
 
@@ -56,10 +58,24 @@ namespace BettingSystem.Controllers
 
         }
 
+        [HttpGet("transactions")]
+        public async Task<ActionResult<PagedResult<TransactionDto>>> GetAllTransactions(
+            string? searchInput,
+            string sortBy = "transactionid",
+            string sortDir = "asc",
+            int page = 1,
+            int pageSize = 10)
+        {
+            var userId = HttpContext.Session.GetInt32("UserID");
+
+            if (userId == null) return Unauthorized();
+
+            var transactions = await _transactionService.GetAllTransactions(searchInput, sortBy, sortDir, page, pageSize);
+
+            return Ok(transactions);
 
 
-
-
+        }
 
         [HttpDelete("users/{id}")]
         public async Task<ActionResult> DeleteUser(int id)

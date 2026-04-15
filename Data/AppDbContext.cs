@@ -9,6 +9,8 @@ namespace BettingSystem.Data
         public DbSet<GameHistory> GameHistories { get; set; }
         public DbSet<GameInformation> GameInformations { get; set; }
 
+        public DbSet<Transaction> Transactions { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 

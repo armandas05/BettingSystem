@@ -11,7 +11,7 @@ namespace BettingSystem.Data.Models
         public decimal Balance { get; set; }
         public DateTime DateCreated { get; set; }
         public bool IsVerified { get; set; }
-        public string Role { get; set; }
+        public User.UserRoles Role { get; set; }
         public int GamesPlayed { get; set; }
         public decimal TotalDeposited { get; set; }
 

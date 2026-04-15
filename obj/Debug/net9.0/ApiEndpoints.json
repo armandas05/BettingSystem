@@ -47,6 +47,52 @@
   },
   {
     "ContainingType": "BettingSystem.Controllers.AdminController",
+    "Method": "GetAllTransactions",
+    "RelativePath": "api/Admin/transactions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchInput",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortDir",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BettingSystem.Data.Models.PagedResult\u00601[[BettingSystem.Data.Models.TransactionDto, BettingSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BettingSystem.Controllers.AdminController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Admin/users",
     "HttpMethod": "GET",
@@ -358,6 +404,22 @@
       {
         "Name": "dto",
         "Type": "BettingSystem.Data.Models.GameDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BettingSystem.Controllers.TransactionController",
+    "Method": "Deposit",
+    "RelativePath": "api/Transaction/deposit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BettingSystem.Data.Models.DepositDto",
         "IsRequired": true
       }
     ],

@@ -552,6 +552,17 @@
             console.error("Bet amount invalid!");
             return;
         }
+
+        const balanceResponse = await fetch('/api/user/balance');
+
+        if (!balanceResponse.ok) return;
+
+        const balance = await balanceResponse.json();
+
+        if(balance <= 0) {
+            console.error("Not enough balance!");
+            return;
+        }
  
         const gameInfo = 
         {

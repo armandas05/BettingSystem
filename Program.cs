@@ -14,6 +14,7 @@ builder.Services.AddScoped<UserStateService>();
 builder.Services.AddScoped<DiceGameService>();
 builder.Services.AddScoped<DiceService>();
 builder.Services.AddScoped<GameService>();
+builder.Services.AddScoped<TransactionService>();
 
 //
 builder.Services.AddHttpContextAccessor();
