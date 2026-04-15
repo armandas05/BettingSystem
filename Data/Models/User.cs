@@ -17,12 +17,20 @@ namespace BettingSystem.Data.Models
         public decimal Balance { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public bool IsVerified { get; set; } = false;
-        public string Role { get; set; } = "User";
+        public UserRoles Role { get; set; }
         public int GamesPlayed { get; set; } = 0;
         public decimal TotalDeposited { get; set; } = 0;
 
 
+        public enum UserRoles
+        {
+            User,
+            Admin
+        }
+
+
         public List<GameHistory>? GameHistories { get; set; }
+        public List<Transaction>? Transactions { get; set; }
 
     }
 }
