@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/BettingSystem/FileContentIndex/10b1a67d-dec3-4cdc-95fc-af5192732baa.vsidx
+/.vs/BettingSystem/FileContentIndex/e70727cc-30e0-4036-a646-1d4f55dcea32.vsidx
+/.vs/BettingSystem/FileContentIndex/af908444-492c-449c-b251-0c9d45052113.vsidx
+/.vs/BettingSystem/FileContentIndex/86d15ee8-7b15-447f-bd31-9af41e5866d6.vsidx
+*.vsidx
+/.vs/BettingSystem/FileContentIndex/d940d03e-3607-4f95-93ed-e918edfce780.vsidx
+/.vs/BettingSystem/FileContentIndex/4e727a11-f702-42d5-8fa3-c4c010744c84.vsidx
