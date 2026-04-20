@@ -15,7 +15,7 @@ public static class DbSeeder
                     Email = "admin@test.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                     Balance = 1000,
-                    Role = 1,
+                    Role = User.UserRoles.Admin,
                     IsVerified = true
                 },
                 new User
@@ -25,27 +25,12 @@ public static class DbSeeder
                     Email = "user@test.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                     Balance = 500,
-                    Role = 0,
+                    Role = User.UserRoles.User,
                     IsVerified = true
                 }
             );
 
             context.SaveChanges();
-        }
-
-        if (!context.GameHistories.Any())
-        {
-            context.GameHistories.AddRange(
-                new GameHistory { UserID = 2, BetAmount = 50, AmountWon = 100, Result = 0, GameID = 1 },
-                new GameHistory { UserID = 2, BetAmount = 20, AmountWon = 0, Result = 1, GameID = 2 }
-            );
-        }
-
-        if (!context.Transactions.Any())
-        {
-            context.Transactions.Add(
-                new Transaction { UserID = 2, DepositAmount = 200, Method = 3 }
-            );
         }
 
         context.SaveChanges();
