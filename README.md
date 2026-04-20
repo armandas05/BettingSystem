@@ -1,6 +1,6 @@
 # iBet – Betting Platform
 
-A WebAPI project built with ASP.NET Core and JavaScript.
+WebAPI project built with ASP.NET Core and JavaScript.
 
 ---
 
