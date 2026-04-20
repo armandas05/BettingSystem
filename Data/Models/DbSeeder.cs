@@ -11,7 +11,7 @@ public static class DbSeeder
                 new User
                 {
                     FirstName = "Admin",
-                    LastName = "User",
+                    LastName = "Test",
                     Email = "admin@test.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                     Balance = 1000,
@@ -21,7 +21,7 @@ public static class DbSeeder
                 new User
                 {
                     FirstName = "Test",
-                    LastName = "User",
+                    LastName = "Test",
                     Email = "user@test.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                     Balance = 500,
@@ -29,8 +29,6 @@ public static class DbSeeder
                     IsVerified = true
                 }
             );
-
-            context.SaveChanges();
         }
 
         context.SaveChanges();
