@@ -1,7 +1,10 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetInt32("UserID") != null;
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+
+    bool isLoggedIn = role != null;
+    bool isAdmin = role == "Admin";
 }
 
 <!DOCTYPE html>
@@ -9,28 +12,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BettingSystem</title>
+    <title>@ViewData["Title"] - iBet</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
 
-<body>
+<body class="@ViewData["Theme"]">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 custom-navbar">
 
-        <a class="navbar-brand" asp-page="/Index">BettingSystem</a>
+        <a class="navbar-brand" asp-page="/Index">iBet</a>
 
         <div class="collapse navbar-collapse">
 
             <ul class="navbar-nav">
 
+
                 @if (isLoggedIn)
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-page="/Games">Games</a>
-                    </li>
+                    </li> 
                 } 
 
             </ul>
@@ -47,29 +51,33 @@
                         <a class="nav-link" asp-page="/Login">Sign in</a>
                     </li>
                 }
-                else
+                @if (isAdmin)
                 {
                     <li class="nav-item me-3">
                         <a class="nav-link" asp-page="/Dashboard">Admin</a>
                     </li>
 
+                }
+
+                @if (isLoggedIn)
+                {
                     <li class="nav-item d-flex align-items-center me-3">
-                        @*pakeisti balance spalva pridet klase?*@
-                        <span id="userBalance" class="text-warning fw-bold me-2">
+                        <span id="userBalance" class="fw-bold me-2">
                             Balance: ...
                         </span>
 
                         <button class="btn btn-success btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#depositModal">
+                                data-bs-toggle="modal"
+                                data-bs-target="#depositModal">
                             +
                         </button>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" asp-page="/Logout">Logout</a>
-                    </li>
+                    </li> 
                 }
+
             </ul>
         </div>
     </nav>

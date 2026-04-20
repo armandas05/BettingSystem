@@ -1,65 +1,46 @@
 ﻿@page
 @model BettingSystem.Pages.LoginModel
 @{
+    ViewData["Theme"] = "theme-default";
 }
 
+<link rel="stylesheet" href="~/css/auth.css" />
+<body>
 
-<h1>Login in</h1>
-<p>Fill in the form to login!</p>
+    <div class="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Welcome Back</h1>
+            <p>Login to continue</p>
 
-<input type="email" id="email" placeholder="Email">
-<br>
-<input type="password" id="password" placeholder="Password">
-<br>
+            <div class="input-group">
+                <input id="email" placeholder=" " />
+                <label>Email</label>
+            </div>
 
-<button id="loginBtn">Login</button>
+            <div class="input-group">
+                <input id="password" type="password" placeholder=" " />
+                <label>Password</label>
+            </div>
 
-<div id="login-result"></div>
+            <button id="loginBtn" class="auth-btn">Login</button>
 
+            <div id="login-result"></div>
 
-
-
-<script>
-	document.getElementById("loginBtn").addEventListener("click", async () => {
-		try {
-
-			const login = {
-				email: document.getElementById("email").value,
-				password: document.getElementById("password").value
-			};
-
-			const response = await fetch('/api/auth/login', {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(login)
-			});
-
-
-			const resultDiv = document.getElementById("login-result");
-
-			if(response.ok) {
-				window.location.href = '/';
-				resultDiv.innerHTML = await response.text();
-			} else {
-				const errorText = await response.text();
-				console.error(errorText);
-			}
+            <div class="auth-footer">
+                No account? <a href="/Register">Sign up</a>
+            </div>
+        </div>
+    </div>
 
 
-
-		} catch (error) {
-			console.error("Error:", error);
-		}
-
-	});
+</body>
 
 
-
-
-
-
-
-</script>
+<link rel="stylesheet" href="~/css/auth.css" />
+<script src="~/js/login.js"></script>

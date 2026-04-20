@@ -50,12 +50,15 @@ namespace BettingSystem.Services
 
         public void Hit()
         {
+            if (_isGameFinished) return;
+
             _playerCards.Add(_deckService.DrawCard());
-            if (GetDealerScore() > 21) return;
-            if (GetPlayerScore() > 21) return;
-            if (GetPlayerScore() == 21) return;
-            if (GetDealerScore() == 21) return;
-            _dealerCards.Add(_deckService.DrawCard());
+
+            if (GetPlayerScore() >= 21)
+            {
+                _isGameFinished = true;
+            }
+
         }
 
         public void Stand() {
@@ -78,22 +81,30 @@ namespace BettingSystem.Services
 
         public string CheckGameStatus()
         {
-
             int dealer = GetDealerScore();
             int player = GetPlayerScore();
 
-            // bust
+            if (player == 21 && !_isGameFinished)
+            {
+                _isGameFinished = true;
+                return "Player wins!";
+            }
+
             if (player > 21)
+            {
+                _isGameFinished = true;
                 return "Dealer wins!";
+            }
 
             if (dealer > 21)
+            {
+                _isGameFinished = true;
                 return "Player wins!";
+            }
 
-            // jei dar ne stand
             if (!_isGameFinished)
                 return "Ongoing";
 
-            // po stand – tada lyginam
             if (player > dealer)
                 return "Player wins!";
             else if (dealer > player)
@@ -103,8 +114,6 @@ namespace BettingSystem.Services
         }
 
         public int CalculateHandValue(List<Card> cards) {
-
-            List<Card> _cards = new List<Card>();
             int cardSum = 0;
             int aceCount = 0;
 
@@ -113,6 +122,7 @@ namespace BettingSystem.Services
                 if(card.Rank == "A")
                 {
                     cardSum += 11;
+                    aceCount++;
                 } 
                 else if (card.Rank == "K" || card.Rank == "Q" || card.Rank == "J")
                 {

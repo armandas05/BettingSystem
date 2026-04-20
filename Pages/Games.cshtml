@@ -1,74 +1,65 @@
 ﻿@page
 @model BettingSystem.Pages.GamesModel
 @{
+    ViewData["Theme"] = "theme-default";
 }
 
-<p>Welcome to the games page!</p>
 
-
-
-<html>
-<head>
-    <style>
-        div.gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        div.gallery-item {
-            margin: 5px;
-            border: 1px solid #ccc;
-            width: 180px;
-        }
-
-            div.gallery-item:hover {
-                border: 1px solid #777;
-            }
-
-            div.gallery-item img {
-                width: 100%;
-                height: auto;
-            }
-
-            div.gallery-item div.desc {
-                padding: 15px;
-                text-align: center;
-            }
-    </style>
-</head>
 <body>
+    <div class="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
-    <div class="gallery">
-        <div class="gallery-item">
-            <a target="_blank" href="/Games/Blackjack">
-                <img src="images/blackjack.jpg" alt="blackjack" width="600" height="400">
-            </a>
-            <div class="desc">Blackjack</div>
-        </div>
 
-        <div class="gallery-item">
-            <a target="_blank" href="/Games/Dices">
-                <img src="images/dices.jpg" alt="dices" width="600" height="400">
-            </a>
-            <div class="desc">Dices</div>
-        </div>
+    <div class="games-container">
 
-        <div class="gallery-item">
-            <a target="_blank" href="/Games/Highlow">
-                <img src="images/highlow.jpg" alt="highlow" width="600" height="400">
-            </a>
-            <div class="desc">High / Low</div>
-        </div>
+        <h1 class="games-title">🎮 Games</h1>
+        <p class="games-subtitle">Choose your game and start winning</p>
 
-        <div class="gallery-item">
-            <a target="_blank" href="/Games/Roulette">
-                <img src="images/roulette.jpg" alt="roulette" width="600" height="400">
+        <div class="games-grid">
+
+            <a href="/Games/Blackjack" class="game-card">
+                <img src="images/blackjack.jpg" />
+                <div class="overlay">
+                    <h3>Blackjack</h3>
+                    <p>Beat the dealer. Get as close to 21 as possible.</p>
+                    <span class="cta">Play now →</span>
+                </div>
             </a>
-            <div class="desc">Roulette</div>
+
+            <a href="/Games/Dices" class="game-card">
+                <img src="images/dices.jpg" />
+                <div class="overlay">
+                    <h3>Dices</h3>
+                    <p>Test your luck. Predict the roll and win big.</p>
+                    <span class="cta">Play now →</span>
+                </div>
+            </a>
+
+            <div class="game-card disabled">
+                <img src="images/highlow.jpg" />
+                <div class="overlay">
+                    <h3>High / Low</h3>
+                    <p>One card. One decision. Higher or lower?</p>
+                    <span class="cta disabled-text">Coming soon</span>
+                </div>
+            </div>
+
+            <div class="game-card disabled">
+                <img src="images/roulette.jpg" />
+                <div class="overlay">
+                    <h3>Roulette</h3>
+                    <p>Classic casino wheel. Red or black?</p>
+                    <span class="cta disabled-text">Coming soon</span>
+                </div>
+            </div>
+
         </div>
 
     </div>
-
 </body>
-</html>
+
+<link rel="stylesheet" href="~/css/games.css" />
+<script src="~/js/games.js"></script>

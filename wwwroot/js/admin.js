@@ -1,4 +1,7 @@
-﻿async function loadPage(page) {
+﻿let gamesChart, winLoseChart, gamesPerDayChart = null;
+
+
+async function loadPage(page) {
     let url = `/Admin/${page}`;
 
     const response = await fetch(url);
@@ -13,7 +16,6 @@
     document.getElementById("content").innerHTML = html;
 
     afterLoadPage(url);
-
 }
 
 function afterLoadPage(url) {
@@ -30,6 +32,11 @@ function afterLoadPage(url) {
 
     if (url.includes("GameHistory")) {
         loadGameHistories();
+        return;
+    }
+
+    if (url.includes("Analytics")) {
+        loadAnalytics();
         return;
     }
 
@@ -55,6 +62,7 @@ async function loadUsers(page = 1) {
     renderUsers(result.data);
     renderPagination(result.totalCount, 1);
     renderSearch(1);
+
 }
 
 
@@ -220,9 +228,15 @@ function renderPagination(totalCount, pageType) {
                 Next
             </button>`;
 
-    html += `<button onclick="changePage(${totalPages}, ${pageType})">
-                Last
-            </button>`;
+    if (totalPages > 1 && currentPage === 1 || currentPage < totalPages) {
+        html += `<button onclick="changePage(${totalPages}, ${pageType})">
+                    Last
+                </button>`;
+    } else if (totalPages > 1 && currentPage === totalPages ) {
+        html += `<button onclick="changePage(1, ${pageType})">
+                    First
+                </button>`;
+    }
 
 
     document.getElementById("pagination").innerHTML = html;
@@ -319,6 +333,7 @@ function renderButtons() {
     document.getElementById("userButtons").innerHTML = html;
 }
 
+
 function viewUser() {
     const selected = getSelectedUserId();
 
@@ -383,7 +398,9 @@ function renderUsers(users) {
     `;
 
     users.forEach(u => {
-        let role = u.role === 0 ? "User" : "Admin";
+        let role = u.role === 0
+            ? `<span class="badge user">User</span>`
+            : `<span class="badge admin">Admin</span>`;
 
         html += `
             <tr>
@@ -429,10 +446,11 @@ function renderGameHistories(histories) {
 
     histories.forEach(h => {
         let game = h.gameID === 1 ? "Blackjack" : "Dices";
-        let result = h.result === 0 ? "Win"
-            : h.result === 1 ? "Lose"
-                : h.result === 2 ? "Draw"
-                    : "Unknown";
+        let result = h.result === 0
+            ? `<span class="badge win">Win</span>`
+            : h.result === 1
+                ? `<span class="badge lose">Lose</span>`
+                : `<span class="badge draw">Draw</span>`;
 
 
         html += `
@@ -506,6 +524,289 @@ function renderPayments(transactions) {
     `;
 
     document.getElementById("paymentsTable").innerHTML = html;
+}
+
+function loadAnalytics() {
+
+    let selected = "7";
+
+    const filter = document.getElementById("timeFilter");
+    if (filter) selected = filter.value;
+
+    renderAnalytics();
+
+    document.getElementById("timeFilter").value = selected;
+
+    loadAnalyticsData();
+}
+
+function renderAnalytics() {
+
+    let html = `
+    <div class="analytics-filter">
+        <select id="timeFilter" onchange="loadAnalytics()">
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="0">All time</option>
+        </select>
+    </div>
+
+    <!-- KPI -->
+    <div class="analytics-kpi">
+
+        <div class="kpi-card glow-green">
+            <h6>Total Games</h6>
+            <h3 id="totalGames">0</h3>
+        </div>
+
+        <div class="kpi-card glow-blue">
+            <h6>Total Bet</h6>
+            <h3 id="totalBet">0</h3>
+        </div>
+
+        <div class="kpi-card glow-purple">
+            <h6>Total Users</h6>
+            <h3 id="totalUsers">0</h3>
+        </div>
+
+        <div class="kpi-card glow-orange">
+            <h6>Total Wins</h6>
+            <h3 id="totalWins">0</h3>
+        </div>
+
+    </div>
+
+    <!-- CHART GRID -->
+    <div class="charts-grid">
+
+        <div class="chart-card pie">
+            <h5>🎮 Most Played</h5>
+            <canvas id="gamesChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h5>📉 Win vs Lose</h5>
+
+            <div class="chart-wrapper">
+                <canvas id="winLoseChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card full">
+            <h5>📅 Games per Day</h5>
+
+            <div class="chart-wrapper">
+                <canvas id="gamesPerDayChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+    `;
+
+    document.getElementById("analytics").innerHTML = html;
+}
+
+async function loadAnalyticsData() {
+
+    const days = document.getElementById("timeFilter").value;
+
+    const response = await fetch(`/api/admin/stats?days=${days}`);
+
+    if (!response.ok) return console.error("Failed to load stats!");
+
+    const data = await response.json();
+
+    animateValue("totalGames", data.totalGames);
+    animateMoney("totalBet", data.totalBetAmount);
+    animateValue("totalUsers", data.totalUsers);
+    animateValue("totalWins", data.totalWins);
+
+    renderGamesChart(data.playedGames);
+    renderWinLoseChart(data.winLoseStats);
+    renderGamesPerDayChart(data.gamesPerDayStats);
+
+}
+
+function renderGamesChart(games) {
+
+    if (gamesChart) {
+        gamesChart.destroy();
+    }
+
+    if (!games || games.length === 0) return;
+
+    const labels = games.map(g => g.gameName);
+    const values = games.map(g => g.count);
+
+    const ctx = document.getElementById("gamesChart").getContext("2d");
+
+    const gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient1.addColorStop(0, "#00c2ff");
+    gradient1.addColorStop(1, "#007bff");
+
+    const gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient2.addColorStop(0, "#ff6384");
+    gradient2.addColorStop(1, "#ff2e63");
+
+    gamesChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: [gradient1, gradient2],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "60%"
+        }
+    });
+}
+
+function renderWinLoseChart(stats) {
+
+    if (winLoseChart) {
+        winLoseChart.destroy();
+    }
+
+    if (!stats || stats.length === 0) return;
+
+    const labels = stats.map(s =>
+        s.result === 0 ? "Win" :
+            s.result === 1 ? "Lose" :
+                "Draw"
+    );
+
+    const values = stats.map(s => s.count);
+
+    const ctx = document.getElementById("winLoseChart").getContext("2d");
+
+    const max = Math.max(...values);
+
+    winLoseChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Results",
+                data: values,
+                backgroundColor: ["#ff5252", "#00e676", "#ffc107"],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: max * 1.2,
+                    grid: {
+                        color: "rgba(255,255,255,0.05)"
+                    }
+                },
+                x: {
+                    grid: {
+                        color: "rgba(255,255,255,0.05)"
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderGamesPerDayChart(days) {
+
+    if (gamesPerDayChart) {
+        gamesPerDayChart.destroy();
+    }
+
+    const ctx = document.getElementById("gamesPerDayChart").getContext("2d");
+
+    const lineGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    lineGradient.addColorStop(0, "rgba(0, 200, 255, 0.5)");
+    lineGradient.addColorStop(1, "rgba(0, 200, 255, 0)");
+
+    const dayMap = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const fullWeek = Array(7).fill(0);
+
+    days.forEach(d => {
+        const index = (d.weekDay + 6) % 7;
+        fullWeek[index] = d.count;
+    });
+
+    const max = Math.max(...fullWeek);
+
+    gamesPerDayChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dayMap,
+            datasets: [{
+                label: "Games per day",
+                data: fullWeek,
+                borderColor: "#00c2ff",
+                backgroundColor: lineGradient,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: max * 1.1
+                }
+            }
+        }
+    });
+}
+
+
+function animateValue(id, end, duration = 800) {
+    const el = document.getElementById(id);
+    let start = 0;
+    const range = end - start;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const value = Math.floor(progress * range + start);
+
+        el.innerText = value.toLocaleString();
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+function animateMoney(id, end, duration = 800) {
+    const el = document.getElementById(id);
+    let start = 0;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const value = (progress * end);
+
+        el.innerText = value.toFixed(2);
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
 }
 
                 

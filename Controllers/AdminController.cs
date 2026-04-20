@@ -1,4 +1,5 @@
 ﻿using BettingSystem.Data.Models;
+using BettingSystem.Filters;
 using BettingSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -8,15 +9,18 @@ namespace BettingSystem.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
+    [AdminOnly]
     public class AdminController : Controller
     {
         private readonly UserService _userService;
         private readonly TransactionService _transactionService;
+        private readonly AnalyticsService _analyticsService;
 
-        public AdminController(UserService userService, TransactionService transactionService)
+        public AdminController(UserService userService, TransactionService transactionService, AnalyticsService analyticsService)
         {
             _userService = userService;
             _transactionService = transactionService;
+            _analyticsService = analyticsService;
         }
 
 
@@ -90,9 +94,20 @@ namespace BettingSystem.Controllers
         }
 
 
+        [HttpGet("stats")]
+        public async Task<ActionResult> GetAnalytics(int days = 7)
+        {
+            var userId = HttpContext.Session.GetInt32("UserID");
+
+            if(userId == null) return Unauthorized();
+
+            var analytics = await _analyticsService.GetAnalytics(days);
+
+            return Ok(analytics);
 
 
 
+        }
 
     }
 }

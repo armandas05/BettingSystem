@@ -29,3 +29,45 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.custom-navbar {
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-default .custom-navbar {
+    background: rgba(15,15,26,0.4);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s;
+}
+
+.theme-blackjack .custom-navbar {
+    background: linear-gradient(90deg, #0f5132, #0b3d2e);
+    box-shadow: 0 0 15px rgba(0, 255, 150, 0.2);
+}
+
+.theme-dice .custom-navbar {
+    background: linear-gradient(90deg, #1b1b2a, #15151a);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.theme-blackjack .navbar-brand {
+    color: #20c997 !important;
+}
+
+.theme-dice .navbar-brand {
+    color: #adb5bd !important;
+}
+
+.navbar a.nav-link {
+    transition: color 0.2s;
+}
+
+.theme-blackjack .nav-link:hover {
+    color: #20c997 !important;
+}
+
+.theme-dice .nav-link:hover {
+    color: #dee2e6 !important;
+}
+

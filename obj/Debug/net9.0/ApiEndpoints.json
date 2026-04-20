@@ -47,6 +47,22 @@
   },
   {
     "ContainingType": "BettingSystem.Controllers.AdminController",
+    "Method": "GetAnalytics",
+    "RelativePath": "api/Admin/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "days",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BettingSystem.Controllers.AdminController",
     "Method": "GetAllTransactions",
     "RelativePath": "api/Admin/transactions",
     "HttpMethod": "GET",
@@ -344,17 +360,11 @@
   {
     "ContainingType": "BettingSystem.Controllers.BlackjackController",
     "Method": "StartGame",
-    "RelativePath": "api/Blackjack/startgame/{gameState}",
+    "RelativePath": "api/Blackjack/startgame",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "gameState",
-        "Type": "System.Boolean",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

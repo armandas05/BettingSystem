@@ -2,9 +2,95 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    ViewData["Theme"] = "theme-default";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to iBet!</h1>
+<div class="home">
+    <section class="hero">
+        <div class="hero-inner">
+
+            <h1 class="fade-up">iBet Casino</h1>
+
+            <p class="subtitle fade-up delay-1">
+                Modern casino experience. Clean design. Instant gameplay.
+            </p>
+
+            <p class="description fade-up delay-2">
+                Play classic games like Blackjack or test your luck with Dice.
+                Smooth animations, real-time actions, and a minimal interface designed
+                for focus and speed.
+            </p>
+
+            <a href="/Games" class="btn-primary fade-up delay-3">
+                Start Playing
+            </a>
+
+        </div>
+
+        <div class="hero-glow"></div>
+    </section>
+
+    <!-- hardcoded for now -->
+    <div class="live-stats fade-up delay-3">
+        <span>👥 425 players online</span>
+        <span>💰 26,284€ won today</span>
+        <span>🎲 312 bets placed</span>
+    </div>
+
+    <section class="games">
+
+        <h2 class="section-title">Games</h2>
+
+        <div class="game-grid">
+
+            <a href="/Games/Blackjack" class="game-card blackjack">
+                <div class="card-glow"></div>
+
+                <h3>Blackjack</h3>
+                <p>Reach 21. Beat the dealer.</p>
+
+                <span class="tag">Classic</span>
+            </a>
+
+            <a href="/Games/Dices" class="game-card dice">
+                <div class="card-glow"></div>
+
+                <h3>Dice</h3>
+                <p>Predict the roll. Multiply your bet.</p>
+
+                <span class="tag">Fast & Risky</span>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="info">
+
+        <div class="info-box">
+            <h3>⚡ Fast Gameplay</h3>
+            <p>No delays. Instant results. Built for smooth interaction.</p>
+        </div>
+
+        <div class="info-box">
+            <h3>🎯 Simple & Clean</h3>
+            <p>Minimal UI so you can focus on the game.</p>
+        </div>
+
+        <div class="info-box">
+            <h3>💰 Real Balance</h3>
+            <p>Track your bets, wins, and strategy in real time.</p>
+        </div>
+
+    </section>
+
+    <section class="cta">
+        <h2>Ready to test your luck?</h2>
+        <a href="/Games" class="btn-primary big">Play Now</a>
+    </section>
+
 </div>
 
+<script src="~/js/index.js"></script>
+<link rel="stylesheet" href="~/css/index.css" />

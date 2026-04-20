@@ -111,17 +111,13 @@ namespace BettingSystem.Controllers
 
 
 
-        [HttpPost("startgame/{gameState}")]
-        public ActionResult StartGame(bool gameState)
+        [HttpPost("startgame")]
+        public ActionResult StartGame()
         {
 
-            if(gameState)
-            {
-                _blackjackService.StartGame();
-                return Ok();
-            }
+            _blackjackService.StartGame();
+            return Ok();
 
-            return BadRequest("Error game has not started!");
 
         }
 

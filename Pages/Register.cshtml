@@ -1,65 +1,52 @@
 ﻿@page
 @model BettingSystem.Pages.RegisterModel
 @{
+    ViewData["Theme"] = "theme-default";
 }
 
+<body>
+    <div class="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Create Account</h1>
+            <p>Join iBet and start winning</p>
 
-<h1> Sign up</h1>
-<p> Fill in the form to sign up!</p>
-<hr>
+            <div class="input-group">
+                <input id="firstName" placeholder=" " />
+                <label>First Name</label>
+            </div>
 
-<input type="text" id="firstName" placeholder="First Name"><br>
-<input type="text" id="lastName" placeholder="Last Name"><br>
-<input type="email" id="email" placeholder="Email"><br>
-<input type="password" id="password" placeholder="Password"><br>
+            <div class="input-group">
+                <input id="lastName" placeholder=" " />
+                <label>Last Name</label>
+            </div>
 
-<button id="registerBtn" >Register </button>
+            <div class="input-group">
+                <input id="email" placeholder=" " />
+                <label>Email</label>
+            </div>
 
-<div id="register-result"></div>
+            <div class="input-group">
+                <input id="password" type="password" placeholder=" " />
+                <label>Password</label>
+                <div id="strength" class="password-strength"></div>
+            </div>
 
+            <button id="registerBtn" class="auth-btn">Register</button>
 
+            <div id="register-result"></div>
 
+            <div class="auth-footer">
+                Already have account? <a href="/Login">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
 
-<script>
-	document.getElementById("registerBtn").addEventListener("click", async () => {
-		try {
-
-			const user = {
-				firstName: document.getElementById("firstName").value,
-				lastName: document.getElementById("lastName").value,
-				email: document.getElementById("email").value,
-				password: document.getElementById("password").value
-			};
-
-			const response = await fetch('/api/auth/register', {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(user)
-			});
-
-
-			const resultDiv = document.getElementById("register-result");
-			resultDiv.innerHTML = await response.text();
-			
-
-
-
-
-		} catch (error) {
-			console.error("Error:", error);
-		}
-
-	});
-
-
-
-
-
-
-
-</script>
-
-
+<script src="~/js/register.js"></script>
+<link rel="stylesheet" href="~/css/auth.css" />

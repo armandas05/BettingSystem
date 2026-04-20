@@ -1,122 +1,45 @@
 ﻿@page "/Admin/Dashboard"
 @model BettingSystem.Pages.DashboardModel
 @{
+    ViewData["Theme"] = "theme-default";
 }
 
-<style>
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #1e1e2f;
-        color: white;
-        border-radius: 10px;
-        overflow: hidden;
-        
-    }
-
-    thead {
-        background-color: #2a2a3d;
-    }
-
-    th, td {
-        padding: 12px 15px;
-        text-align: left;
-    }
-
-    th {
-        cursor: pointer;
-        user-select: none;
-    }
-
-        th:hover {
-            background-color: #3a3a55;
-        }
-
-    tbody tr {
-        border-bottom: 1px solid #2f2f44;
-        transition: 0.2s;
-    }
-
-        tbody tr:hover {
-            background-color: #2a2a3d;
-        }
-
-    #pagination {
-        margin-top: 15px;
-        display: flex;
-        gap: 8px;
-    }
-
-    #pagination button {
-        padding: 6px 12px;
-        background-color: #2a2a3d;
-        border: none;
-        color: white;
-        cursor: pointer;
-        border-radius: 6px;
-    }
-
-    #pagination button:hover {
-        background-color: #3a3a55;
-    }
-    
-    #pagination button.active {
-        background-color: #00c2ff;
-        color: black;
-    }
-
-    div.grid {
-        display:flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        
-        margin-top: 30%;
-    }
-
-    div.grid-item {
-        margin: 5px;
-        border: 1px solid #ccc;
-        width: 200px;
-        height: 200px;
-        font-size: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-    }
-
-    div.grid-item a {
-        cursor: pointer;
-    }
-    
-    div.grid-item a:hover {
-        font-size: 20px;
-    }
-
-
-</style>
-
 <body>
+    <div class="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
     <div id="content" class="content">
-        
-        <div class="grid">
 
-            <div class="grid-item">
-                <a onclick="loadPage('DashboardPartial')">Dashboard</a>
+        <h1 class="admin-title">Admin Dashboard</h1>
+        <p class="admin-subtitle">Manage platform data and monitor activity</p>
+
+        <div class="admin-grid">
+
+            <div class="admin-card" onclick="loadPage('AnalyticsPartial')">
+                <div class="card-icon">📊</div>
+                <h3>Analytics</h3>
+                <p>View platform stats, charts and performance</p>
             </div>
 
-            <div class="grid-item">
-                <a onclick="loadPage('UsersPartial')">Users</a>
+            <div class="admin-card" onclick="loadPage('UsersPartial')">
+                <div class="card-icon">👤</div>
+                <h3>Users</h3>
+                <p>Manage users, roles and balances</p>
             </div>
 
-            <div class="grid-item">
-                <a onclick="loadPage('PaymentsPartial')">Payments</a>
+            <div class="admin-card" onclick="loadPage('PaymentsPartial')">
+                <div class="card-icon">💳</div>
+                <h3>Payments</h3>
+                <p>Track deposits, withdrawals and transactions</p>
             </div>
 
-            <div class="grid-item">
-                <a onclick="loadPage('GameHistoryPartial')">Game history</a>
+            <div class="admin-card" onclick="loadPage('GameHistoryPartial')">
+                <div class="card-icon">🎮</div>
+                <h3>Game History</h3>
+                <p>Inspect bets, results and game logs</p>
             </div>
 
         </div>
@@ -127,7 +50,8 @@
 </body>
 
 
-
-<script src="/js/admin.js"></script>
+<link rel="stylesheet" href="~/css/admin.css" />
+<script src="~/js/admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 

@@ -1,0 +1,166 @@
+﻿body {
+    background: radial-gradient(circle at center, #0b3d2e, #051e16);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.blackjack-table {
+    background: #0f5132;
+    border: 4px solid #0a3d2a;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 30px auto;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+@keyframes deal {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.card {
+    width: 71px;
+    height: 95px;
+    background-image: url('/images/cards.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    transition: transform 0.3s;
+    animation: deal 0.3s ease;
+}
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+
+.hand {
+    margin: 10px 0 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#hit {
+    background: #198754;
+    color: white;
+}
+
+#stand {
+    background: #dc3545;
+    color: white;
+}
+
+#startGame {
+    background: #198754;
+    color: white;
+}
+
+#restart {
+    background: #ffc107;
+    color: white;
+}
+
+#bet {
+    background: #6f42c1;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+#bet-number {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    width: 120px;
+    text-align: center;
+}
+
+.score {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#game-status {
+    font-size: 24px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.rules-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #0a3d2a;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+    .rules-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+.rule {
+    background: #145c3a;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+    .rule h4 {
+        margin-bottom: 10px;
+    }
+
+    .rule ul {
+        list-style-position: inside;
+        padding: 0;
+    }
+
+#toggleRulesBtn {
+    background: #198754;
+    color: white;
+    margin-bottom: 15px;
+}
+
+#rulesContent {
+    transition: all 0.3s ease;
+}
+
+.rules-hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.rules-visible {
+    max-height: 1000px;
+    opacity: 1;
+}

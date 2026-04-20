@@ -14,12 +14,9 @@ namespace BettingSystem.Pages
 
         public IActionResult OnGet()
         {
-            var userId = _httpContextAccessor.HttpContext.Session.GetInt32("UserID");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (userId == null)
-            {
-                return RedirectToPage("/Login");
-            }
+            if (role != "Admin") return RedirectToPage("/Index");
 
             return Page();
         }

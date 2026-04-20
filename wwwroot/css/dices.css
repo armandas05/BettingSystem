@@ -1,0 +1,324 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #1e1e2f, #0f0f1a);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.page-center {
+    min-height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    width: 900px;
+    padding: 10px 0 20px;
+    background: rgba(40, 40, 55, 0.9);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.title {
+    font-size: 26px;
+    margin: 20px 0 10px;
+    text-align: center;
+    color: #e4e4e7;
+}
+
+.dice-top-background,
+.dice-middle-background,
+.dice-bottom-background {
+    width: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.dice-top-background {
+    justify-content: space-between;
+}
+
+.dice-middle-background {
+    justify-content: space-between;
+}
+
+.dice-bottom-background {
+    justify-content: center;
+}
+
+input {
+    transition: 0.2s;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.4);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.text-area-bet {
+    width: 100%;
+    padding: 30px 25px;
+    padding-right: 380px;
+    border-radius: 6px;
+    border: none;
+    background: radial-gradient(#1e1e2f, #0f0f1a);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+    font-size: 18px;
+}
+
+.text-buttons {
+    position: absolute;
+    right: 20px;
+    top: 60%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+    .text-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background: radial-gradient(#1e1e2f, #151524);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: white;
+        transition: 0.2s;
+    }
+        .text-buttons button:hover {
+            background: #323245;
+        }
+
+        .text-buttons button:first-child {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0);
+            font-weight: bold;
+            padding: 5px 10px;
+        }
+
+.profit-group {
+    width: 20%;
+}
+
+.profit {
+    padding: 30px;
+    background: radial-gradient(#1e1e2f, #0f0f1a);
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.under-over {
+    width: 15%;
+}
+
+    .under-over button {
+        width: 100%;
+        height: 80%;
+        padding: 20px;
+        border-radius: 6px;
+        border: none;
+        background: radial-gradient(#1e1e2f, #0f0f1a);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: white;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .under-over button:hover {
+        background: #50505c;
+    }
+
+
+.text-area-roll,
+.text-area-multi,
+.text-area-chance {
+    width: 25%;
+}
+
+
+    .text-area-roll input,
+    .text-area-multi input {
+        background: radial-gradient(#1e1e2f, #0f0f1a);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 30px;
+        text-align: center;
+        color: white;
+        border-radius: 6px;
+        border: none;
+        font-size: 24px;
+    }
+
+
+.text-area-chance-label {
+    padding: 30px;
+    text-align: center;
+    background: radial-gradient(#1e1e2f, #0f0f1a);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+
+.slidecontainer {
+    position: relative;
+    width: 80%;
+    margin: 60px 0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 100%; 
+    height: 10px;
+
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none; 
+    opacity: 0.7; 
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+    .slider:hover {
+        opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 8px;
+        height: 75px; 
+        background: white;
+        cursor: pointer; 
+        border-radius: 5px;
+    }
+
+
+
+.roll-dice-button {
+    padding: 15px 60px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #00c853, #009624);
+    color: white;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .roll-dice-button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #00e676, #00c853);
+    }
+
+
+
+@keyframes tada {
+    0% {
+        transform: scale(1) translateX(-50%)
+    }
+
+    50% {
+        transform: scale(.9) rotate(-3deg) translateX(-50%)
+    }
+
+    100% {
+        transform: scale(1) translateX(-50%)
+    }
+}
+
+.shape {
+    position: absolute;
+    top: -15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    display: none;
+    transform: translateX(-50%);
+    animation: tada 0.6s;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+
+
+/* RULES */
+.rules-container {
+    width: 900px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.rules-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(40,40,55,0.9);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .rules-btn:hover {
+        background: rgba(60,60,80,0.9);
+        transform: scale(1.05);
+    }
+
+.rules-body {
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 15px;
+    padding: 0 20px;
+    background: rgba(40,40,55,0.6);
+    border-radius: 10px;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+    .rules-body.open {
+        max-height: 500px;
+        padding: 20px;
+    }
+
+    .rules-body p {
+        margin: 10px 0;
+        color: #ddd;
+    }
+
+    .rules-body ul {
+        text-align: left;
+        max-width: 500px;
+        margin: 15px auto;
+    }
+
+    .rules-body li {
+        margin: 8px 0;
+    }

@@ -21,7 +21,6 @@ C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\rjsmcshtml.dsw
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\scopedcss\bundle\BettingSystem.styles.css
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\scopedcss\projectbundle\BettingSystem.bundle.scp.css
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\31j8vz772z-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\tgbmozdjyu-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\p0bwmwcpow-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\8t73jdbakl-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -446,4 +445,17 @@ C:\Users\Eridas\Desktop\projects\BettingSystem\obj\Debug\net9.0\compressed\a39xv
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\BettingSystem.sourcelink.json
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\7i57jrf71k-{0}-pjjs02dm76-pjjs02dm76.gz
-C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-hh871yxfs9-hh871yxfs9.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\fmrdl7nnee-{0}-3wr3qtrvbu-3wr3qtrvbu.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\9mcz0jbalz-{0}-62u2sz6kf0-62u2sz6kf0.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\w15tg2f3uz-{0}-mhl9ctzfoj-mhl9ctzfoj.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\ved37na024-{0}-3a62ssgpy2-3a62ssgpy2.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\31j8vz772z-{0}-g5goh655cy-g5goh655cy.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\1o2mbwn8z5-{0}-z7dtqvjc3r-z7dtqvjc3r.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\knng6o76om-{0}-m7ivowvb8b-m7ivowvb8b.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\1ahooiwi3r-{0}-qpf8odhgc2-qpf8odhgc2.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\o0jpxx8wlt-{0}-tvxbmf66f7-tvxbmf66f7.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\kdbu5cid5b-{0}-um435hqvco-um435hqvco.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\c7v3fcgl0a-{0}-9kwpud5csf-9kwpud5csf.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\rf1ima5m67-{0}-b2849rc2sn-b2849rc2sn.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\a39xvy1aqv-{0}-b6b0yq7as6-b6b0yq7as6.gz
+C:\Users\Armandas\Desktop\PROJECTS\BettingSystem\obj\Debug\net9.0\compressed\lns1qiontx-{0}-864mhx8blr-864mhx8blr.gz

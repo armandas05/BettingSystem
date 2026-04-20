@@ -42,7 +42,8 @@ namespace BettingSystem.Controllers
             }
 
             HttpContext.Session.SetInt32("UserID", user.UserID);
-            
+            HttpContext.Session.SetString("Role", user.Role.ToString());
+
             return Ok("Logged in succesfully!");
         }
 
