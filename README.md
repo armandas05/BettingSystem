@@ -46,7 +46,7 @@ A modern betting system built with ASP.NET Core and JavaScript.
 ### 1. Clone repo
 
 ```
-git clone https://github.com/yourusername/BettingSystem.git
+git clone https://github.com/armandas05/BettingSystem.git
 cd BettingSystem
 ```
 
