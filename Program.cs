@@ -56,18 +56,12 @@ app.MapRazorPages()
 
 app.Run();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-    DbSeeder.Seed(db);
-}
-
 // DB SEEDER FOR TESTING PURPOSES
 // COMMENT CODE IF NOT NEEDED
 
 //using (var scope = app.Services.CreateScope())
 //{
 //    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//    db.Database.Migrate();
 //    DbSeeder.Seed(db);
 //}
