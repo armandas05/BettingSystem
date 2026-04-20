@@ -17,7 +17,6 @@ builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<AnalyticsService>();
 
-//
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
@@ -25,10 +24,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://*:{port}");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -38,7 +39,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//
 app.UseSession();
 
 app.UseHttpsRedirection();
@@ -55,3 +55,19 @@ app.MapRazorPages()
 
 
 app.Run();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    DbSeeder.Seed(db);
+}
+
+// DB SEEDER FOR TESTING PURPOSES
+// COMMENT CODE IF NOT NEEDED
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//    DbSeeder.Seed(db);
+//}
