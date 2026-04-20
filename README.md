@@ -31,7 +31,6 @@ A modern betting system built with ASP.NET Core and JavaScript.
 * ASP.NET Core (C#)
 * Entity Framework Core
 * JavaScript (Vanilla)
-* Chart.js
 * SQL Server
 
 ---
@@ -58,13 +57,7 @@ Update connection string in:
 appsettings.json
 ```
 
-### 3. Run migrations
-
-```
-dotnet ef database update
-```
-
-### 4. Run project
+### 3. Run project
 
 ```
 dotnet run
