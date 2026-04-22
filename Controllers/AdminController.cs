@@ -1,28 +1,27 @@
 ﻿using BettingSystem.Data.Models;
 using BettingSystem.Filters;
 using BettingSystem.Services;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
 namespace BettingSystem.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     [AdminOnly]
     public class AdminController : Controller
     {
-        private readonly UserService _userService;
-        private readonly TransactionService _transactionService;
-        private readonly AnalyticsService _analyticsService;
+        private readonly IUserService _userService;
+        private readonly ITransactionService _transactionService;
+        private readonly IAnalyticsService _analyticsService;
 
-        public AdminController(UserService userService, TransactionService transactionService, AnalyticsService analyticsService)
+        public AdminController(IUserService userService, ITransactionService transactionService, IAnalyticsService analyticsService)
         {
             _userService = userService;
             _transactionService = transactionService;
             _analyticsService = analyticsService;
         }
-
 
         [HttpGet("users")]
         public async Task<ActionResult<PagedResult<UserDto>>> GetAllUsers(
@@ -36,11 +35,9 @@ namespace BettingSystem.Controllers
 
             if (userId == null) return Unauthorized();
 
-            var users = await _userService.GetUsers(searchInput, sortBy, sortDir, page, pageSize);
+            var users = await _userService.GetUsersAsync(searchInput, sortBy, sortDir, page, pageSize);
 
             return Ok(users);
-
-
         }
 
         [HttpGet("gamehistories")]
@@ -56,10 +53,9 @@ namespace BettingSystem.Controllers
 
             if(userId == null) return Unauthorized();
 
-            var gameHistories = await _userService.GetGameHistories(searchInput, sortBy, sortDir, page, pageSize);
+            var gameHistories = await _userService.GetGameHistoriesAsync(searchInput, sortBy, sortDir, page, pageSize);
 
             return Ok(gameHistories);
-
         }
 
         [HttpGet("transactions")]
@@ -74,11 +70,9 @@ namespace BettingSystem.Controllers
 
             if (userId == null) return Unauthorized();
 
-            var transactions = await _transactionService.GetAllTransactions(searchInput, sortBy, sortDir, page, pageSize);
+            var transactions = await _transactionService.GetAllTransactionsAsync(searchInput, sortBy, sortDir, page, pageSize);
 
             return Ok(transactions);
-
-
         }
 
         [HttpDelete("users/{id}")]
@@ -88,11 +82,10 @@ namespace BettingSystem.Controllers
 
             if (userId == null) return Unauthorized();
 
-            await _userService.DeleteUser(id);
+            await _userService.DeleteUserAsync(id);
 
             return NoContent();
         }
-
 
         [HttpGet("stats")]
         public async Task<ActionResult> GetAnalytics(int days = 7)
@@ -101,13 +94,9 @@ namespace BettingSystem.Controllers
 
             if(userId == null) return Unauthorized();
 
-            var analytics = await _analyticsService.GetAnalytics(days);
+            var analytics = await _analyticsService.GetAnalyticsAsync(days);
 
             return Ok(analytics);
-
-
-
         }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BettingSystem.Data;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -7,20 +8,17 @@ using System.Threading.Channels;
 
 namespace BettingSystem.Services
 {
-    public class DiceService
+    public class DiceService : IDiceService
     {
 
         private readonly DiceGameService _diceGameService;
 
-        public DiceService(AppDbContext context, UserService userService)
+        public DiceService(DiceGameService diceGameService)
         {
-            _diceGameService = new DiceGameService();
+            _diceGameService = diceGameService;
         }
-
-
         public GameResult Play(decimal betAmount, decimal rollNumber, string rollType)
         {
-
             var rolled = _diceGameService.GetDiceNumber();
 
             bool win = rollType == "Under"
@@ -37,11 +35,7 @@ namespace BettingSystem.Services
                 WonAmount = amountWon,
                 Result = win ? WinType.Win : WinType.Lose
             };
-
-            
-
         }
-
         public decimal GetMultiplier(decimal rollNumber, string rollType)
         {
             var chance = rollType == "Under" ? rollNumber : 100 - rollNumber;
@@ -57,8 +51,5 @@ namespace BettingSystem.Services
 
             return Math.Round(multi, 2);
         }
-
-      
-
     }
 }

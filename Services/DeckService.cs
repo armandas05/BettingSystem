@@ -6,13 +6,11 @@ namespace BettingSystem.Services
     public class DeckService
     {
         private List<Card> _deck;
-        private Random _random = new Random();
-
+        private static readonly Random _random = new Random();
         public DeckService()
         {
             ResetDeck();
         }
-
 
         public void ResetDeck()
         {
@@ -44,9 +42,5 @@ namespace BettingSystem.Services
             return card;
 
         }
-
-
-
     }
-
  }

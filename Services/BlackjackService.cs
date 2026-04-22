@@ -1,15 +1,15 @@
 ﻿using BettingSystem.Data.Entities;
 using BettingSystem.Services;
+using BettingSystem.Services.Interfaces;
 using System.Runtime.CompilerServices;
 
 namespace BettingSystem.Services
 {
-    public class BlackjackService
+    public class BlackjackService : IBlackjackService
     {
-
         private List<Card> _dealerCards = new List<Card>();
         private List<Card> _playerCards = new List<Card>();
-        private readonly DeckService _deckService = new DeckService();
+        private readonly DeckService _deckService;
         private bool _isGameFinished = false;
         private decimal _currentBet;
 
@@ -42,11 +42,8 @@ namespace BettingSystem.Services
 
         public List<Card> ShowDealerCards() => _dealerCards;
         public List<Card> ShowPlayerCards() => _playerCards;
-
-
         public int GetDealerScore() => CalculateHandValue(_dealerCards);
         public int GetPlayerScore() => CalculateHandValue(_playerCards);
-
 
         public void Hit()
         {
@@ -70,15 +67,11 @@ namespace BettingSystem.Services
             _isGameFinished = true;
         
         }
-
         public void SetBet(decimal amount)
         {
             _currentBet = amount;
         }
-
         public decimal GetBet() => _currentBet;
-
-
         public string CheckGameStatus()
         {
             int dealer = GetDealerScore();
@@ -142,10 +135,5 @@ namespace BettingSystem.Services
 
             return cardSum;
         }
-
-
-
-
-
     }
 }

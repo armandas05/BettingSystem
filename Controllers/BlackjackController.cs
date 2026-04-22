@@ -1,34 +1,32 @@
 ﻿using BettingSystem.Data.Entities;
 using BettingSystem.Data.Models;
 using BettingSystem.Services;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace BettingSystem.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class BlackjackController : ControllerBase
     {
         private readonly DeckService _deckService;
-        private readonly BlackjackService _blackjackService;
-        private readonly UserService _userService;
-        private readonly GameService _gameService;
-
+        private readonly IBlackjackService _blackjackService;
+        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
 
         public BlackjackController(
             DeckService deckService, 
-            BlackjackService blackjackService, 
-            UserService userService,
-            GameService gameService)
+            IBlackjackService blackjackService, 
+            IUserService userService,
+            IGameService gameService)
         {
             _deckService = deckService;
             _blackjackService = blackjackService;
             _userService = userService;
             _gameService = gameService;
         }
-
 
         [HttpGet("drawcard")]
         public ActionResult<Card> GetCard() => _deckService.DrawCard();
@@ -40,8 +38,8 @@ namespace BettingSystem.Controllers
         public ActionResult<IEnumerable<Card>> ShowPlayerHand() => _blackjackService.ShowPlayerCards();
 
         [HttpPost("hit")]
-        public ActionResult Hit() {
-
+        public ActionResult Hit()
+        {
             _blackjackService.Hit();
 
             return Ok("Player has succesfully hitted!");
@@ -67,7 +65,7 @@ namespace BettingSystem.Controllers
                 return Unauthorized();
             }
 
-            var success = await _userService.PlaceBet(userId.Value, betAmount);
+            var success = await _userService.PlaceBetAsync(userId.Value, betAmount);
 
             if(!success)
             {
@@ -78,9 +76,7 @@ namespace BettingSystem.Controllers
 
 
             return Ok();
-
         }
-
 
         [HttpGet("status")]
         public ActionResult<string> GameStatus()
@@ -92,13 +88,13 @@ namespace BettingSystem.Controllers
         public ActionResult RestartGame()
         {
             _blackjackService.RestartGame();
+
             return Ok();
         }
 
-
-
         [HttpGet("playerscore")]
-        public ActionResult<int> GetPlayerScore() {
+        public ActionResult<int> GetPlayerScore()
+        {
             return Ok(_blackjackService.GetPlayerScore());
         } 
 
@@ -108,17 +104,12 @@ namespace BettingSystem.Controllers
             return Ok(_blackjackService.GetDealerScore());
         }
         
-
-
-
         [HttpPost("startgame")]
         public ActionResult StartGame()
         {
-
             _blackjackService.StartGame();
+
             return Ok();
-
-
         }
 
         [HttpPost("finishgame")]
@@ -142,27 +133,22 @@ namespace BettingSystem.Controllers
             {
                 dto.Result = WinType.Win;
                 dto.WonAmount = bet * 2;
-                var results = await _gameService.FinishBlackjack(dto, (int)userId);
+                var results = await _gameService.FinishBlackjackAsync(dto, (int)userId);
             } 
             else if (result == "Dealer wins!")
             {
                 dto.Result = WinType.Lose;
                 dto.WonAmount = 0;
-                var results = await _gameService.FinishBlackjack(dto, (int)userId);
+                var results = await _gameService.FinishBlackjackAsync(dto, (int)userId);
             }
             else
             {
                 dto.Result = WinType.Draw;
                 dto.WonAmount = 0;
-                var results = await _gameService.FinishBlackjack(dto, (int)userId);
+                var results = await _gameService.FinishBlackjackAsync(dto, (int)userId);
             }
 
-
             return Ok(result);
-
         }
-    
-
-
     }
 }

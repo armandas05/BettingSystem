@@ -1,26 +1,25 @@
 ﻿using BettingSystem.Data;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Services
 {
-    public class GameService
+    public class GameService : IGameService
     {
         private readonly AppDbContext _context;
-        private readonly BlackjackService _blackjackService;
-        private readonly DiceService _diceService;
+        private readonly IBlackjackService _blackjackService;
+        private readonly IDiceService _diceService;
 
-        public GameService(AppDbContext context, BlackjackService blackjackService, DiceService diceService)
+        public GameService(AppDbContext context, IBlackjackService blackjackService, IDiceService diceService)
         {
             _context = context;
             _blackjackService = blackjackService;
             _diceService = diceService;
         }
-
-
-        public async Task<IResult> PlayDice(GameDto dto, int userId)
+        public async Task<IResult> PlayDiceAsync(GameDto dto, int userId)
         {
             var user = await _context.Users.FindAsync(userId);
 
@@ -51,12 +50,11 @@ namespace BettingSystem.Services
             user.GamesPlayed++;
 
             await _context.SaveChangesAsync();
-            return Results.Ok(result);
 
+            return Results.Ok(result);
         }
 
-
-        public async Task<IResult> FinishBlackjack(GameResult result, int userId)
+        public async Task<IResult> FinishBlackjackAsync(GameResult result, int userId)
         {
             var user = await _context.Users.FindAsync(userId);
 
@@ -66,7 +64,6 @@ namespace BettingSystem.Services
             {
                 user.Balance += result.WonAmount;
             }
-
 
             var history = new GameHistory
             {
@@ -82,14 +79,8 @@ namespace BettingSystem.Services
             user.GamesPlayed++;
 
             await _context.SaveChangesAsync();
+            
             return Results.Ok(result);
-
-
-
-
         }
-
-
-
     }
 }

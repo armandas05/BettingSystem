@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BettingSystem.Services;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 
 namespace BettingSystem.Controllers
 {
@@ -8,9 +9,9 @@ namespace BettingSystem.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public AuthController(UserService userService)
+        public AuthController(IUserService userService)
         {
             _userService = userService;
         }
@@ -18,24 +19,21 @@ namespace BettingSystem.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-
             try
             {
-                await _userService.RegisterUser(dto);
+                await _userService.RegisterUserAsync(dto);
                 return Ok("User succesfully registered!");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
         }
-
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = await _userService.LoginUser(dto);
+            var user = await _userService.LoginUserAsync(dto);
             if (user == null)
             {
                 return BadRequest("Invalid credentials");
@@ -46,8 +44,5 @@ namespace BettingSystem.Controllers
 
             return Ok("Logged in succesfully!");
         }
-
-
-
     }
 }

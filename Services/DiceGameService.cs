@@ -4,7 +4,6 @@ namespace BettingSystem.Services
 {
     public class DiceGameService
     {
-
         public decimal GetDiceNumber()
         {
             var bytes = new byte[4];
@@ -17,10 +16,6 @@ namespace BettingSystem.Services
             decimal result = normalized * 99.99m;
 
             return Math.Round(result, 2);
-
         }
-
-
-
     }
 }

@@ -1,23 +1,22 @@
 ﻿using BCrypt.Net;
 using BettingSystem.Data;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-
         private readonly AppDbContext _context;
-        private readonly UserStateService _stateService;
-        public UserService(AppDbContext context, UserStateService stateService)
+        private readonly IUserStateService _stateService;
+        public UserService(AppDbContext context, IUserStateService stateService)
         {
             _context = context;
             _stateService = stateService;
         }
-
-        public async Task RegisterUser(RegisterDto dto)
+        public async Task RegisterUserAsync(RegisterDto dto)
         {
 
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
@@ -44,11 +43,8 @@ namespace BettingSystem.Services
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
         }
-
-
-        public async Task<User> LoginUser(LoginDto dto)
+        public async Task<User> LoginUserAsync(LoginDto dto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
@@ -57,7 +53,6 @@ namespace BettingSystem.Services
                 throw new Exception("No account registered with this email!");
             }
 
-
             if(!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
                 throw new Exception("Wrong password!");
@@ -65,10 +60,9 @@ namespace BettingSystem.Services
 
             _stateService.Login(user);
             return user;
-
         }
 
-        public async Task DeleteUser(int id)
+        public async Task DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -82,8 +76,7 @@ namespace BettingSystem.Services
             await _context.SaveChangesAsync();
         }
 
-
-        public async Task<PagedResult<UserDto>> GetUsers(
+        public async Task<PagedResult<UserDto>> GetUsersAsync(
             string? searchInput,
             string sortBy,
             string sortDir,
@@ -92,14 +85,12 @@ namespace BettingSystem.Services
         {
             var query = _context.Users.AsQueryable();
 
-            //search box
             if(!string.IsNullOrWhiteSpace(searchInput))
             {
                 searchInput = searchInput.Trim().ToLower();
 
                 int userId;
                 bool isIdSearch = int.TryParse(searchInput, out userId);
-
 
                 query = query.Where(u =>
                     u.FirstName.ToLower().Contains(searchInput) ||
@@ -108,10 +99,8 @@ namespace BettingSystem.Services
                     (isIdSearch && u.UserID == userId)
 
                 );
-
             }
 
-            //sort
             query = sortBy.ToLower() switch
             {
                 "userid" => sortDir == "asc"
@@ -181,12 +170,9 @@ namespace BettingSystem.Services
             {
                 Data = users,
                 TotalCount = totalCount
-            };
-                
+            };    
         }
-
-
-        public async Task<PagedResult<GameHistoryDto>> GetGameHistories(
+        public async Task<PagedResult<GameHistoryDto>> GetGameHistoriesAsync(
             string? searchInput,
             string sortBy,
             string sortDir,
@@ -195,7 +181,6 @@ namespace BettingSystem.Services
         {
             var query = _context.GameHistories.AsQueryable();
 
-            //search box
             if (!string.IsNullOrWhiteSpace(searchInput))
             {
                 searchInput = searchInput.Trim().ToLower();
@@ -208,7 +193,6 @@ namespace BettingSystem.Services
 
             }
 
-            //sort
             query = sortBy.ToLower() switch
             {
                 "gamesessionid" => sortDir == "asc"
@@ -263,50 +247,46 @@ namespace BettingSystem.Services
                 Data = histories,
                 TotalCount = totalCount
             };
-
         }
-
-
-        public async Task<decimal> GetBalance(int userId)
+        public async Task<decimal> GetBalanceAsync(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
+
+            if(user == null)
+            {
+                throw new Exception("User not found");
+            }
 
             return user.Balance;
         }
-
-        public async Task<bool> PlaceBet(int userId, decimal amount)
+        public async Task<bool> PlaceBetAsync(int userId, decimal amount)
         {
             var user = await _context.Users.FindAsync(userId);
 
-            if (amount <= 0)
+            if (user == null || amount <= 0 || user.Balance < amount)
             {
                 return false;
             }
 
-            if (user.Balance < amount)
-            {
-                return false;
-            }
 
             user.Balance -= amount;
-
             await _context.SaveChangesAsync();
 
             return true;
-
-
         }
 
-        public async Task AddBalance(int userId, decimal amount)
+        public async Task AddBalanceAsync(int userId, decimal amount)
         {
             var user = await _context.Users.FindAsync(userId);
+
+            if(user == null)
+            {
+                throw new Exception("User not found");
+            }
 
             user.Balance += amount;
 
             await _context.SaveChangesAsync();
         }
-
-
-
     }
 }

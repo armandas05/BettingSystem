@@ -1,6 +1,7 @@
 using BettingSystem.Services;
 using BettingSystem.Data;
 using Microsoft.EntityFrameworkCore;
+using BettingSystem.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,14 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<DeckService>();
-builder.Services.AddSingleton<BlackjackService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<UserStateService>();
+builder.Services.AddSingleton<IBlackjackService, BlackjackService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserStateService, UserStateService>();
 builder.Services.AddScoped<DiceGameService>();
-builder.Services.AddScoped<DiceService>();
-builder.Services.AddScoped<GameService>();
-builder.Services.AddScoped<TransactionService>();
-builder.Services.AddScoped<AnalyticsService>();
+builder.Services.AddScoped<IDiceService, DiceService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();

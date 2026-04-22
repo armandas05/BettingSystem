@@ -1,10 +1,11 @@
 ﻿using BettingSystem.Data;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Services
 {
-    public class AnalyticsService
+    public class AnalyticsService : IAnalyticsService
     {
         private readonly AppDbContext _context;
 
@@ -13,7 +14,7 @@ namespace BettingSystem.Services
             _context = context;
         }
 
-        public async Task<AnalyticsDto> GetAnalytics(int days)
+        public async Task<AnalyticsDto> GetAnalyticsAsync(int days)
         {
             var query = _context.GameHistories.AsQueryable();
 
@@ -25,7 +26,6 @@ namespace BettingSystem.Services
 
             var games = await query.ToListAsync();
 
-
             var totalGames = games.Count;
 
             var totalBet = games.Sum(x => x.BetAmount);
@@ -33,7 +33,6 @@ namespace BettingSystem.Services
             var totalUsers = await _context.Users.CountAsync();
 
             var totalWins = games.Count(x => x.Result == WinType.Win);
-
 
             var mostGamesPlayed = games
                 .GroupBy(x => x.GameID)
@@ -53,8 +52,6 @@ namespace BettingSystem.Services
                 })
                 .ToList();
 
-            
-
             var gamesPerDay = games
                 .GroupBy(x => x.DateTime.DayOfWeek)
                 .Select(g => new GamesPerDayDto
@@ -63,7 +60,6 @@ namespace BettingSystem.Services
                     Count = g.Count()
                 })
                 .ToList();
-
 
             return new AnalyticsDto
             {
@@ -75,13 +71,6 @@ namespace BettingSystem.Services
                 WinLoseStats = winLoseStats,
                 GamesPerDayStats = gamesPerDay,
             };
-
-
-
         }
-
-
-
-
     }
 }

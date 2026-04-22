@@ -1,6 +1,6 @@
 ﻿using BettingSystem.Services;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace BettingSystem.Controllers
 {
@@ -8,10 +8,8 @@ namespace BettingSystem.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-
-        private readonly UserService _userService;
-
-        public UserController(UserService userService)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -26,15 +24,9 @@ namespace BettingSystem.Controllers
                 return Unauthorized();
             }
 
-            var balance = await _userService.GetBalance((int)userId);
+            var balance = await _userService.GetBalanceAsync((int)userId);
 
             return Ok(balance);
-
         }
-
-
-
-
-
     }
 }

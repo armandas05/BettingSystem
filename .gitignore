@@ -25,6 +25,9 @@ obj/
 # Logs
 *.log
 
+# Migrations
+Migrations/
+
 # Node
 node_modules/
 

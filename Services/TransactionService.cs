@@ -1,28 +1,31 @@
 ﻿using BettingSystem.Data;
 using BettingSystem.Data.Models;
+using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Services
 {
-    public class TransactionService
+    public class TransactionService : ITransactionService
     {
         private readonly AppDbContext _context;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public TransactionService(AppDbContext context, UserService userService)
+        public TransactionService(AppDbContext context, IUserService userService)
         {
             _context = context;
             _userService = userService;
         }
-
-
-        public async Task Deposit(int userId, decimal amount, DepositMethod method)
+        public async Task DepositAsync(int userId, decimal amount, DepositMethod method)
         {
             var user = await _context.Users.FindAsync(userId);
 
-            await _userService.AddBalance(userId, amount);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
 
+            await _userService.AddBalanceAsync(userId, amount);
 
             var transaction = new Transaction
             {
@@ -32,14 +35,12 @@ namespace BettingSystem.Services
                 DateDeposited = DateTime.Now
             };
 
-
             user.TotalDeposited += amount;
             _context.Transactions.Add(transaction);
 
             await _context.SaveChangesAsync();
         }
-
-        public async Task<PagedResult<TransactionDto>> GetAllTransactions(
+        public async Task<PagedResult<TransactionDto>> GetAllTransactionsAsync(
             string? searchInput,
             string sortBy,
             string sortDir,
@@ -48,7 +49,6 @@ namespace BettingSystem.Services
         {
             var query = _context.Transactions.AsQueryable();
 
-            //search box
             if (!string.IsNullOrWhiteSpace(searchInput))
             {
                 searchInput = searchInput.Trim().ToLower();
@@ -61,7 +61,6 @@ namespace BettingSystem.Services
 
             }
 
-            //sort
             query = sortBy.ToLower() switch
             {
                 "transactionid" => sortDir == "asc"
@@ -106,10 +105,6 @@ namespace BettingSystem.Services
                 Data = transactions,
                 TotalCount = totalCount
             };
-
         }
-
-
-
     }
 }
