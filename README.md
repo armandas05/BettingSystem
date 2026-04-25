@@ -64,18 +64,18 @@ Update connection string in:
 appsettings.json
 ```
 
-### 3. Run project
+### 3. Run RabbitMQ (Docker) (REQUIRED)
+```
+docker run -d --hostname rabbit --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
+
+### 4. Run project
 
 ```
 dotnet run
 ```
 
-### 4. Run RabbitMQ (Docker) (OPTIONAL)
-```
-docker run -d --hostname rabbit --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
-```
-
-### 5. Open RabbitMQ UI
+### 5. Open RabbitMQ UI (OPTIONAL)
 ```
 http://localhost:15672 
 Login: guest / guest
