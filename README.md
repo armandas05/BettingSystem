@@ -24,6 +24,12 @@ WebAPI project built with ASP.NET Core and JavaScript.
 * Payments tracking
 * Game history
 
+### Asynchronous Processing
+
+* RabbitMQ used for background processing
+* Separate queues for game events and transactions
+* Background consumers handle database operations
+
 ---
 
 ## Tech Stack
@@ -32,6 +38,7 @@ WebAPI project built with ASP.NET Core and JavaScript.
 * Entity Framework Core
 * JavaScript (Vanilla)
 * SQL Server
+* RabbitMQ
 
 ---
 
@@ -63,6 +70,17 @@ appsettings.json
 dotnet run
 ```
 
+### 4. Run RabbitMQ (Docker) (OPTIONAL)
+```
+docker run -d --hostname rabbit --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
+
+### 5. Open RabbitMQ UI
+```
+http://localhost:15672 
+Login: guest / guest
+```
+
 ---
 
 ## 🔑 Demo Accounts
@@ -81,7 +99,6 @@ dotnet run
 
 ## 📌 Future Improvements
 
-* RabbitMQ integration
 * Real-time updates (SignalR)
 * More games (Roulette, High/Low)
 * Bug fixes
