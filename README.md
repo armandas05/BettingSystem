@@ -43,7 +43,7 @@ WebAPI project built with ASP.NET Core and JavaScript.
 ---
 
 ## Preview
-
+![Short preview](screenshots/short_preview.gif)
 
 ---
 
