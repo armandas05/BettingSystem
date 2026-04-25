@@ -2,6 +2,7 @@ using BettingSystem.Services;
 using BettingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using BettingSystem.Services.Interfaces;
+using BettingSystem.Services.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddScoped<IDiceService, DiceService>();
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+
+builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
+builder.Services.AddHostedService<GameConsumer>();
+builder.Services.AddHostedService<TransactionConsumer>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();

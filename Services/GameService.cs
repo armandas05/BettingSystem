@@ -12,12 +12,14 @@ namespace BettingSystem.Services
         private readonly AppDbContext _context;
         private readonly IBlackjackService _blackjackService;
         private readonly IDiceService _diceService;
+        private readonly IRabbitMqService _rabbitMqService;
 
-        public GameService(AppDbContext context, IBlackjackService blackjackService, IDiceService diceService)
+        public GameService(AppDbContext context, IBlackjackService blackjackService, IDiceService diceService, IRabbitMqService rabbitMqService)
         {
             _context = context;
             _blackjackService = blackjackService;
             _diceService = diceService;
+            _rabbitMqService = rabbitMqService;
         }
         public async Task<IResult> PlayDiceAsync(GameDto dto, int userId)
         {
@@ -36,20 +38,22 @@ namespace BettingSystem.Services
                 user.Balance += result.WonAmount;
             }
 
-            var history = new GameHistory
+            user.GamesPlayed++;
+
+            await _context.SaveChangesAsync();
+
+
+            var gameEvent = new GameEventDto
             {
                 UserID = userId,
                 BetAmount = dto.BetAmount,
                 AmountWon = result.WonAmount,
                 Result = result.Result,
-                GameID = 2,
+                GameId = 2,
                 DateTime = DateTime.Now
             };
 
-            _context.GameHistories.Add(history);
-            user.GamesPlayed++;
-
-            await _context.SaveChangesAsync();
+            await _rabbitMqService.PublishAsync("game-history", gameEvent);
 
             return Results.Ok(result);
         }
@@ -65,20 +69,21 @@ namespace BettingSystem.Services
                 user.Balance += result.WonAmount;
             }
 
-            var history = new GameHistory
+            user.GamesPlayed++;
+
+            await _context.SaveChangesAsync();
+
+            var gameEvent = new GameEventDto
             {
                 UserID = userId,
                 BetAmount = _blackjackService.GetBet(),
                 AmountWon = result.WonAmount,
                 Result = result.Result,
-                GameID = 1,
+                GameId = 1,
                 DateTime = DateTime.Now
             };
 
-            _context.GameHistories.Add(history);
-            user.GamesPlayed++;
-
-            await _context.SaveChangesAsync();
+            await _rabbitMqService.PublishAsync("game-history", gameEvent);
             
             return Results.Ok(result);
         }

@@ -10,11 +10,13 @@ namespace BettingSystem.Services
     {
         private readonly AppDbContext _context;
         private readonly IUserService _userService;
+        private readonly IRabbitMqService _rabbitMqService;
 
-        public TransactionService(AppDbContext context, IUserService userService)
+        public TransactionService(AppDbContext context, IUserService userService, IRabbitMqService rabbitMqService)
         {
             _context = context;
             _userService = userService;
+            _rabbitMqService = rabbitMqService;
         }
         public async Task DepositAsync(int userId, decimal amount, DepositMethod method)
         {
@@ -27,7 +29,11 @@ namespace BettingSystem.Services
 
             await _userService.AddBalanceAsync(userId, amount);
 
-            var transaction = new Transaction
+            user.TotalDeposited += amount;
+
+            await _context.SaveChangesAsync();
+
+            var transactionEvent = new TransactionEventDto
             {
                 UserID = userId,
                 DepositAmount = amount,
@@ -35,10 +41,7 @@ namespace BettingSystem.Services
                 DateDeposited = DateTime.Now
             };
 
-            user.TotalDeposited += amount;
-            _context.Transactions.Add(transaction);
-
-            await _context.SaveChangesAsync();
+            await _rabbitMqService.PublishAsync("transaction-history", transactionEvent);
         }
         public async Task<PagedResult<TransactionDto>> GetAllTransactionsAsync(
             string? searchInput,
@@ -56,9 +59,7 @@ namespace BettingSystem.Services
                 int userId;
                 bool isIdSearch = int.TryParse(searchInput, out userId);
 
-
                 query = query.Where(u => (isIdSearch && u.UserID == userId));
-
             }
 
             query = sortBy.ToLower() switch
