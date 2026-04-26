@@ -28,7 +28,6 @@ WebAPI project built with ASP.NET Core and JavaScript.
 
 * RabbitMQ used for background processing
 * Separate queues for game events and transactions
-* Background consumers handle database operations
 
 ---
 
