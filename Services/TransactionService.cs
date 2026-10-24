@@ -1,4 +1,4 @@
-﻿using BettingSystem.Data;
+using BettingSystem.Data;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -20,11 +20,12 @@ namespace BettingSystem.Services
         }
         public async Task DepositAsync(int userId, decimal amount, DepositMethod method)
         {
+            BettingSystem.Domain.Validation.PositiveAmount(amount);
             var user = await _context.Users.FindAsync(userId);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new BettingSystem.Domain.BettingValidationException("User not found");
             }
 
             await _userService.AddBalanceAsync(userId, amount);
@@ -89,8 +90,7 @@ namespace BettingSystem.Services
             var totalCount = await query.CountAsync();
 
             var transactions = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Page(page: page, pageSize: pageSize)
                 .Select(u => new TransactionDto
                 {
                     TransactionID = u.TransactionID,

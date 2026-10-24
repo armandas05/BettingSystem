@@ -1,4 +1,4 @@
-﻿using BettingSystem.Data.Models;
+using BettingSystem.Data.Models;
 using BettingSystem.Filters;
 using BettingSystem.Services;
 using BettingSystem.Services.Interfaces;
@@ -28,8 +28,8 @@ namespace BettingSystem.Controllers
             string? searchInput,
             string sortBy = "userid",
             string sortDir = "asc",
-            int page = 1,
-            int pageSize = 10)
+            int page = QueryDefaults.FirstPage,
+            int pageSize = QueryDefaults.DefaultPageSize)
         {
             var userId = HttpContext.Session.GetInt32("UserID");
 
@@ -37,7 +37,8 @@ namespace BettingSystem.Controllers
 
             var users = await _userService.GetUsersAsync(searchInput, sortBy, sortDir, page, pageSize);
 
-            return Ok(users);
+            var (data, totalCount) = users;
+            return Ok(new PagedResult<UserDto> { Data = data, TotalCount = totalCount });
         }
 
         [HttpGet("gamehistories")]
@@ -45,8 +46,8 @@ namespace BettingSystem.Controllers
             string? searchInput,
             string sortBy = "gamesessionid",
             string sortDir = "asc",
-            int page = 1,
-            int pageSize = 10)
+            int page = QueryDefaults.FirstPage,
+            int pageSize = QueryDefaults.DefaultPageSize)
         {
 
             var userId = HttpContext.Session.GetInt32("UserID");
@@ -63,8 +64,8 @@ namespace BettingSystem.Controllers
             string? searchInput,
             string sortBy = "transactionid",
             string sortDir = "asc",
-            int page = 1,
-            int pageSize = 10)
+            int page = QueryDefaults.FirstPage,
+            int pageSize = QueryDefaults.DefaultPageSize)
         {
             var userId = HttpContext.Session.GetInt32("UserID");
 
@@ -88,7 +89,7 @@ namespace BettingSystem.Controllers
         }
 
         [HttpGet("stats")]
-        public async Task<ActionResult> GetAnalytics(int days = 7)
+        public async Task<ActionResult> GetAnalytics(int days = QueryDefaults.AnalyticsDays)
         {
             var userId = HttpContext.Session.GetInt32("UserID");
 

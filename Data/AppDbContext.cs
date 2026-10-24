@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+using BettingSystem.Domain;
+using Microsoft.EntityFrameworkCore;
 using BettingSystem.Data.Models;
 
 namespace BettingSystem.Data
@@ -19,13 +20,13 @@ namespace BettingSystem.Data
             modelBuilder.Entity<GameInformation>().HasData(
                 new GameInformation
                 {
-                    GameID = 1,
+                    GameID = GameIds.Blackjack,
                     GameName = "Blackjack",
                     GameDescription = "A game of blackjack..."
                 },
                 new GameInformation
                 {
-                    GameID = 2,
+                    GameID = GameIds.Dice,
                     GameName = "Dices",
                     GameDescription = "Roll the dice..."
                 }

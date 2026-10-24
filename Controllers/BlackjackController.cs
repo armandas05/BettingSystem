@@ -1,4 +1,5 @@
-﻿using BettingSystem.Data.Entities;
+using BettingSystem.Domain;
+using BettingSystem.Data.Entities;
 using BettingSystem.Data.Models;
 using BettingSystem.Services;
 using BettingSystem.Services.Interfaces;
@@ -132,7 +133,7 @@ namespace BettingSystem.Controllers
             if(result == "Player wins!")
             {
                 dto.Result = WinType.Win;
-                dto.WonAmount = bet * 2;
+                dto.WonAmount = bet * BlackjackConstants.WinPayoutMultiplier;
                 var results = await _gameService.FinishBlackjackAsync(dto, (int)userId);
             } 
             else if (result == "Dealer wins!")

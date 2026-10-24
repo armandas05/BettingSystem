@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+using BettingSystem.Domain;
+using System.Security.Cryptography;
 
 namespace BettingSystem.Services
 {
@@ -6,16 +7,16 @@ namespace BettingSystem.Services
     {
         public decimal GetDiceNumber()
         {
-            var bytes = new byte[4];
+            var bytes = new byte[sizeof(uint)];
             RandomNumberGenerator.Fill(bytes);
 
             uint randomInt = BitConverter.ToUInt32(bytes, 0);
 
             decimal normalized = randomInt / (decimal)uint.MaxValue;
 
-            decimal result = normalized * 99.99m;
+            decimal result = normalized * DiceConstants.MaxRoll;
 
-            return Math.Round(result, 2);
+            return Math.Round(result, DiceConstants.DecimalPlaces);
         }
     }
 }

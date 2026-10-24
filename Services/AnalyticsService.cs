@@ -1,4 +1,5 @@
-﻿using BettingSystem.Data;
+using BettingSystem.Domain;
+using BettingSystem.Data;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace BettingSystem.Services
                 .GroupBy(x => x.GameID)
                 .Select(g => new PlayedGamesDto
                 {
-                    GameName = g.Key == 1 ? "Blackjack" : "Dice",
+                    GameName = g.Key == GameIds.Blackjack ? "Blackjack" : "Dice",
                     Count = g.Count()
                 })
                 .ToList();

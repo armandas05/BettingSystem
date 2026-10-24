@@ -1,4 +1,4 @@
-﻿using BCrypt.Net;
+using BCrypt.Net;
 using BettingSystem.Data;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
@@ -23,7 +23,7 @@ namespace BettingSystem.Services
 
             if (existingUser != null)
             {
-                throw new Exception("User with this email already exists!");
+                throw new BettingSystem.Domain.BettingValidationException("User with this email already exists!");
             }
 
             var user = new User
@@ -48,14 +48,14 @@ namespace BettingSystem.Services
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-            if(user == null)
+            if (user == null)
             {
-                throw new Exception("No account registered with this email!");
+                throw new BettingSystem.Domain.BettingValidationException("No account registered with this email!");
             }
 
-            if(!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
-                throw new Exception("Wrong password!");
+                throw new BettingSystem.Domain.BettingValidationException("Wrong password!");
             }
 
             _stateService.Login(user);
@@ -66,9 +66,9 @@ namespace BettingSystem.Services
         {
             var user = await _context.Users.FindAsync(id);
 
-            if(user == null)
+            if (user == null)
             {
-                throw new Exception("No user found!");
+                throw new BettingSystem.Domain.BettingValidationException("No user found!");
             }
 
             _context.Users.Remove(user);
@@ -85,7 +85,7 @@ namespace BettingSystem.Services
         {
             var query = _context.Users.AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(searchInput))
+            if (!string.IsNullOrWhiteSpace(searchInput))
             {
                 searchInput = searchInput.Trim().ToLower();
 
@@ -148,8 +148,7 @@ namespace BettingSystem.Services
             var totalCount = await query.CountAsync();
 
             var users = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Page(page: page, pageSize: pageSize)
                 .Select(u => new UserDto
                 {
                     UserID = u.UserID,
@@ -170,7 +169,7 @@ namespace BettingSystem.Services
             {
                 Data = users,
                 TotalCount = totalCount
-            };    
+            };
         }
         public async Task<PagedResult<GameHistoryDto>> GetGameHistoriesAsync(
             string? searchInput,
@@ -188,9 +187,7 @@ namespace BettingSystem.Services
                 int userId;
                 bool isIdSearch = int.TryParse(searchInput, out userId);
 
-
                 query = query.Where(u => (isIdSearch && u.UserID == userId));
-
             }
 
             query = sortBy.ToLower() switch
@@ -228,8 +225,7 @@ namespace BettingSystem.Services
             var totalCount = await query.CountAsync();
 
             var histories = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Page(page: page, pageSize: pageSize)
                 .Select(u => new GameHistoryDto
                 {
                     GameSessionID = u.GameSessionID,
@@ -252,15 +248,16 @@ namespace BettingSystem.Services
         {
             var user = await _context.Users.FindAsync(userId);
 
-            if(user == null)
+            if (user == null)
             {
-                throw new Exception("User not found");
+                throw new BettingSystem.Domain.BettingValidationException("User not found");
             }
 
             return user.Balance;
         }
         public async Task<bool> PlaceBetAsync(int userId, decimal amount)
         {
+            BettingSystem.Domain.Validation.PositiveAmount(amount, name: "Bet");
             var user = await _context.Users.FindAsync(userId);
 
             if (user == null || amount <= 0 || user.Balance < amount)
@@ -279,9 +276,9 @@ namespace BettingSystem.Services
         {
             var user = await _context.Users.FindAsync(userId);
 
-            if(user == null)
+            if (user == null)
             {
-                throw new Exception("User not found");
+                throw new BettingSystem.Domain.BettingValidationException("User not found");
             }
 
             user.Balance += amount;

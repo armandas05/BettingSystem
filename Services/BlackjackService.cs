@@ -1,4 +1,5 @@
-﻿using BettingSystem.Data.Entities;
+using BettingSystem.Domain;
+using BettingSystem.Data.Entities;
 using BettingSystem.Services;
 using BettingSystem.Services.Interfaces;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,7 @@ namespace BettingSystem.Services
         private readonly DeckService _deckService;
         private bool _isGameFinished = false;
         private decimal _currentBet;
+        private readonly HandRules _rules = new BlackjackRules();
 
         public BlackjackService(DeckService deckService)
         {
@@ -19,12 +21,12 @@ namespace BettingSystem.Services
         }
         public void StartGame()
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < BlackjackConstants.InitialDealerCards; i++)
             {
                 _dealerCards.Add(_deckService.DrawCard());
             }
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < BlackjackConstants.InitialPlayerCards; i++)
             {
                 _playerCards.Add(_deckService.DrawCard());
             }
@@ -51,7 +53,7 @@ namespace BettingSystem.Services
 
             _playerCards.Add(_deckService.DrawCard());
 
-            if (GetPlayerScore() >= 21)
+            if (GetPlayerScore() >= BlackjackConstants.TargetScore)
             {
                 _isGameFinished = true;
             }
@@ -59,7 +61,7 @@ namespace BettingSystem.Services
         }
 
         public void Stand() {
-            while(GetDealerScore() < 17)
+            while(GetDealerScore() < BlackjackConstants.DealerStandScore)
             {
                 _dealerCards.Add(_deckService.DrawCard());
             }
@@ -77,19 +79,19 @@ namespace BettingSystem.Services
             int dealer = GetDealerScore();
             int player = GetPlayerScore();
 
-            if (player == 21 && !_isGameFinished)
+            if (player == BlackjackConstants.TargetScore && !_isGameFinished)
             {
                 _isGameFinished = true;
                 return "Player wins!";
             }
 
-            if (player > 21)
+            if (player > BlackjackConstants.TargetScore)
             {
                 _isGameFinished = true;
                 return "Dealer wins!";
             }
 
-            if (dealer > 21)
+            if (dealer > BlackjackConstants.TargetScore)
             {
                 _isGameFinished = true;
                 return "Player wins!";
@@ -106,34 +108,6 @@ namespace BettingSystem.Services
                 return "Draw!";
         }
 
-        public int CalculateHandValue(List<Card> cards) {
-            int cardSum = 0;
-            int aceCount = 0;
-
-            foreach(var card in cards)
-            {
-                if(card.Rank == "A")
-                {
-                    cardSum += 11;
-                    aceCount++;
-                } 
-                else if (card.Rank == "K" || card.Rank == "Q" || card.Rank == "J")
-                {
-                    cardSum += 10;
-                } 
-                else
-                {
-                    cardSum += int.Parse(card.Rank);
-                }
-            }
-
-            while(cardSum > 21 && aceCount > 0)
-            {
-                cardSum -= 10;
-                aceCount--;
-            }
-
-            return cardSum;
-        }
+        public int CalculateHandValue(List<Card> cards) => _rules.Calculate(cards);
     }
 }

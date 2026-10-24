@@ -7,7 +7,7 @@ using BettingSystem.Services.RabbitMQ;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<BettingSystem.Filters.BettingExceptionFilter>());
 
 builder.Services.AddSingleton<DeckService>();
 builder.Services.AddSingleton<IBlackjackService, BlackjackService>();

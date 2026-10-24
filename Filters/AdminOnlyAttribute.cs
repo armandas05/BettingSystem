@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using BettingSystem.Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BettingSystem.Filters
@@ -15,7 +16,7 @@ namespace BettingSystem.Filters
                 return;
             }
 
-            if (role != "Admin")
+            if (!role.ToPermissions().Includes(Permissions.ManageUsers | Permissions.ViewAnalytics))
             {
                 context.Result = new ForbidResult();
             }

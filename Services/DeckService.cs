@@ -1,46 +1,54 @@
-﻿using BettingSystem.Data.Entities;
+using BettingSystem.Data.Entities;
+using BettingSystem.Domain;
 
+namespace BettingSystem.Services;
 
-namespace BettingSystem.Services
+public sealed class CardDrawnEventArgs : EventArgs
 {
-    public class DeckService
+    public Card Card { get; }
+    public CardDrawnEventArgs(Card card) => Card = card;
+}
+
+public sealed class DeckService
+{
+    private static readonly Card[] StandardCards;
+    private readonly ILogger<DeckService> _logger;
+    private CardDeck _deck = new(Array.Empty<Card>());
+    public event EventHandler<CardDrawnEventArgs>? CardDrawn;
+
+    static DeckService()
     {
-        private List<Card> _deck;
-        private static readonly Random _random = new Random();
-        public DeckService()
-        {
-            ResetDeck();
-        }
-
-        public void ResetDeck()
-        {
-            var suits = new[] { "Hearts", "Spades", "Diamonds", "Clubs" };
-            var ranks = new[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-
-            _deck = new List<Card>();
-
-            foreach (var suit in suits)
-            {
-                foreach (var rank in ranks)
-                {
-                    _deck.Add(new Card{ Suit = suit, Rank = rank });
-
-                }
-            }
-            _deck = _deck.OrderBy(x => _random.Next()).ToList();
-        }
-
-        public Card DrawCard()
-        {
-            if(_deck.Count == 0)
-            {
-                ResetDeck();
-            }
-
-            var card = _deck[0];
-            _deck.RemoveAt(0);
-            return card;
-
-        }
+        StandardCards = CardExtensions.CreateCards("Hearts", "Spades", "Diamonds", "Clubs").ToArray();
+        Array.Sort(StandardCards);
+        if (StandardCards.Distinct().Count() != CardConstants.StandardDeckSize || StandardCards[0] == StandardCards[1])
+            throw new InvalidOperationException($"The standard deck must have {CardConstants.StandardDeckSize} unique cards.");
     }
- }
+
+    public DeckService(ILogger<DeckService> logger)
+    {
+        _logger = logger;
+        CardDrawn += LogCardDrawn;
+        ResetDeck();
+    }
+
+    private void LogCardDrawn(object? sender, CardDrawnEventArgs args) =>
+        _logger.LogDebug("Drew {Card}; face card: {FaceCard}", args.Card.ToString("G", null), args.Card.IsFaceCard());
+
+    public void ResetDeck()
+    {
+        var cards = (Card[])StandardCards.Clone();
+        Random.Shared.Shuffle(cards);
+        _deck = new CardDeck(cards);
+    }
+
+    public Card DrawCard()
+    {
+        if (_deck.Count == 0) ResetDeck();
+
+        var card = _deck.First();
+
+        _deck = new CardDeck(_deck.Slice(1..));
+        CardDrawn?.Invoke(this, new CardDrawnEventArgs(card));
+        return card;
+    }
+}

@@ -1,4 +1,5 @@
-﻿using BettingSystem.Data;
+using BettingSystem.Domain;
+using BettingSystem.Data;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -23,17 +24,21 @@ namespace BettingSystem.Services
         }
         public async Task<IResult> PlayDiceAsync(GameDto dto, int userId)
         {
+            BettingSystem.Domain.Validation.PositiveAmount(dto.BetAmount, name: "Bet");
+            if (dto.RollNumber is not decimal rollNumber || dto.RollType is not ("Under" or "Over"))
+                throw new BettingSystem.Domain.BettingValidationException("Choose a dice number and roll type.");
+
             var user = await _context.Users.FindAsync(userId);
 
             if (user == null) throw new Exception("User not found");
 
             if (user.Balance < dto.BetAmount) return Results.BadRequest("Not enough balance");
 
-            var result = _diceService.Play(dto.BetAmount, (decimal)dto.RollNumber, dto.RollType);
+            var result = _diceService.Play(dto.BetAmount, rollNumber, dto.RollType);
 
             user.Balance -= dto.BetAmount;
 
-            if(result.Result == WinType.Win)
+            if (result.Result == WinType.Win)
             {
                 user.Balance += result.WonAmount;
             }
@@ -49,7 +54,7 @@ namespace BettingSystem.Services
                 BetAmount = dto.BetAmount,
                 AmountWon = result.WonAmount,
                 Result = result.Result,
-                GameId = 2,
+                GameId = GameIds.Dice,
                 DateTime = DateTime.Now
             };
 
@@ -79,12 +84,12 @@ namespace BettingSystem.Services
                 BetAmount = _blackjackService.GetBet(),
                 AmountWon = result.WonAmount,
                 Result = result.Result,
-                GameId = 1,
+                GameId = GameIds.Blackjack,
                 DateTime = DateTime.Now
             };
 
             await _rabbitMqService.PublishAsync("game-history", gameEvent);
-            
+
             return Results.Ok(result);
         }
     }

@@ -1,4 +1,5 @@
-﻿using BettingSystem.Data;
+using BettingSystem.Domain;
+using BettingSystem.Data;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,10 @@ namespace BettingSystem.Services
         }
         public GameResult Play(decimal betAmount, decimal rollNumber, string rollType)
         {
+            BettingSystem.Domain.Validation.PositiveAmount(betAmount, name: "Bet");
+            if (rollNumber is <= DiceConstants.MinRoll or >= DiceConstants.PercentageScale || rollType is not ("Under" or "Over"))
+                throw new BettingSystem.Domain.BettingValidationException("Invalid dice selection.");
+
             var rolled = _diceGameService.GetDiceNumber();
 
             bool win = rollType == "Under"
@@ -38,18 +43,18 @@ namespace BettingSystem.Services
         }
         public decimal GetMultiplier(decimal rollNumber, string rollType)
         {
-            var chance = rollType == "Under" ? rollNumber : 100 - rollNumber;
+            var chance = rollType == "Under" ? rollNumber : DiceConstants.PercentageScale - rollNumber;
 
-            chance = Math.Clamp(chance, 0.01m, 95.00m);
+            chance = Math.Clamp(chance, DiceConstants.MinWinChance, DiceConstants.MaxWinChance);
 
-            var multi = 95.00m / chance;
+            var multi = DiceConstants.PayoutPercentage / chance;
 
-            if(multi == 1.00m && chance == 95.00m)
+            if (multi == DiceConstants.BreakEvenMultiplier && chance == DiceConstants.MaxWinChance)
             {
-                multi = 1.01m;
+                multi = DiceConstants.MinPayoutMultiplier;
             }
 
-            return Math.Round(multi, 2);
+            return Math.Round(multi, DiceConstants.DecimalPlaces);
         }
     }
 }

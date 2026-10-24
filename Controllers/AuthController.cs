@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using BettingSystem.Services;
 using BettingSystem.Data.Models;
 using BettingSystem.Services.Interfaces;
@@ -24,7 +24,7 @@ namespace BettingSystem.Controllers
                 await _userService.RegisterUserAsync(dto);
                 return Ok("User succesfully registered!");
             }
-            catch (Exception ex)
+            catch (BettingSystem.Domain.BettingValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
